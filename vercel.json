@@ -1,14 +1,14 @@
 {
   "version": 2,
   "env": {
-    "RESEND_API_KEY": "re_7hJatVrC_ADLqgWrHg7KDsWputMybxxzc",
+    "RESEND_API_KEY": "re_GDhTbgVg_8DK7Fhrvren6QhVKHxhwVt3h",
     "NEXT_PUBLIC_SUPABASE_URL": "https://lcwzjehpjjgmekuculue.supabase.co",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxjd3pqZWhwampnbWVrdWN1bHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxNTg1MzMsImV4cCI6MjA2MTczNDUzM30.Dy3bn88s5Qh_hoa7eZt8fko0GiVosj6guGkMGGbIH_c",
     "SUPABASE_SERVICE_ROLE": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxjd3pqZWhwampnbWVrdWN1bHVlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjE1ODUzMywiZXhwIjoyMDYxNzM0NTMzfQ.sd4ICqG0eGCFPEXK-aQro8ijCGMK2DiX0lkFU-n6FYI"
   },
   "build": {
     "env": {
-      "RESEND_API_KEY": "re_7hJatVrC_ADLqgWrHg7KDsWputMybxxzc",
+      "RESEND_API_KEY": "re_GDhTbgVg_8DK7Fhrvren6QhVKHxhwVt3h",
       "NEXT_PUBLIC_SUPABASE_URL": "https://lcwzjehpjjgmekuculue.supabase.co",
       "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxjd3pqZWhwampnbWVrdWN1bHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxNTg1MzMsImV4cCI6MjA2MTczNDUzM30.Dy3bn88s5Qh_hoa7eZt8fko0GiVosj6guGkMGGbIH_c",
       "SUPABASE_SERVICE_ROLE": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxjd3pqZWhwampnbWVrdWN1bHVlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjE1ODUzMywiZXhwIjoyMDYxNzM0NTMzfQ.sd4ICqG0eGCFPEXK-aQro8ijCGMK2DiX0lkFU-n6FYI"
