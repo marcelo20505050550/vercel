@@ -1,0 +1,225 @@
+"use client";
+
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+type CurriculumFormData = {
+  name: string;
+  email: string;
+  phone: string;
+  position: string;
+  message: string;
+  resume?: FileList;
+};
+
+const CurriculumForm: React.FC = () => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CurriculumFormData>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const onSubmit = async (data: CurriculumFormData) => {
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    if (!file) {
+      setErrorMessage('Por favor, anexe seu currículo.');
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
+      formData.append('position', data.position);
+      formData.append('message', data.message);
+      formData.append('file', file);
+
+      console.log('Enviando arquivo:', file.name, 'Tamanho:', file.size, 'Tipo:', file.type);
+
+      // Enviar para a API real
+      const response = await fetch('/api/send-curriculum', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        reset();
+        setFile(null);
+        setFileName('');
+      } else {
+        setErrorMessage(result.error || 'Ocorreu um erro ao enviar seu currículo. Por favor, tente novamente.');
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar currículo:', error);
+      setErrorMessage('Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.');
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+      
+      // Verificar tipo de arquivo (PDF ou DOC/DOCX)
+      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!validTypes.includes(selectedFile.type)) {
+        setErrorMessage('Formato de arquivo inválido. Aceitamos apenas PDF, DOC ou DOCX.');
+        setSubmitStatus('error');
+        setFile(null);
+        setFileName('');
+        return;
+      }
+      
+      // Verificar tamanho (máximo 5MB)
+      if (selectedFile.size > 5 * 1024 * 1024) {
+        setErrorMessage('O arquivo é muito grande. O tamanho máximo permitido é 5MB.');
+        setSubmitStatus('error');
+        setFile(null);
+        setFileName('');
+        return;
+      }
+      
+      setFile(selectedFile);
+      setFileName(selectedFile.name);
+      setSubmitStatus('idle');
+      setErrorMessage('');
+    }
+  };
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md">
+      <h3 className="text-2xl font-bold mb-6 text-gray-800">Envie seu currículo</h3>
+      
+      {submitStatus === 'success' && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+          <strong className="font-bold">Sucesso!</strong>
+          <span className="block sm:inline"> Seu currículo foi enviado com sucesso. Entraremos em contato em breve.</span>
+        </div>
+      )}
+      
+      {submitStatus === 'error' && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+          <strong className="font-bold">Erro!</strong>
+          <span className="block sm:inline"> {errorMessage || 'Ocorreu um erro ao enviar seu currículo. Por favor, tente novamente.'}</span>
+        </div>
+      )}
+      
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-gray-700 font-medium mb-1">Nome completo *</label>
+          <input
+            type="text"
+            id="name"
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
+            {...register('name', { required: 'Nome é obrigatório' })}
+          />
+          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">Email *</label>
+            <input
+              type="email"
+              id="email"
+              className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+              {...register('email', { 
+                required: 'Email é obrigatório',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Email inválido'
+                }
+              })}
+            />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+          </div>
+          
+          <div>
+            <label htmlFor="phone" className="block text-gray-700 font-medium mb-1">Telefone *</label>
+            <input
+              type="tel"
+              id="phone"
+              className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+              {...register('phone', { required: 'Telefone é obrigatório' })}
+            />
+            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+          </div>
+        </div>
+        
+        <div>
+          <label htmlFor="position" className="block text-gray-700 font-medium mb-1">Cargo Desejado *</label>
+          <select
+            id="position"
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${errors.position ? 'border-red-500' : 'border-gray-300'}`}
+            {...register('position', { required: 'Cargo Desejado é obrigatório' })}
+          >
+            <option value="">Selecione um cargo</option>
+            <option value="Engenheiro Mecânico">Engenheiro Mecânico</option>
+            <option value="Soldador">Soldador</option>
+            <option value="Projetista">Projetista</option>
+            <option value="Técnico">Técnico</option>
+            <option value="Administrativo">Administrativo</option>
+            <option value="Outro">Outro</option>
+          </select>
+          {errors.position && <p className="text-red-500 text-sm mt-1">{errors.position.message}</p>}
+        </div>
+        
+        <div>
+          <label htmlFor="message" className="block text-gray-700 font-medium mb-1">Mensagem</label>
+          <textarea
+            id="message"
+            rows={4}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            placeholder="Conte-nos um pouco sobre você e sua experiência..."
+            {...register('message')}
+          ></textarea>
+        </div>
+        
+        <div>
+          <label htmlFor="resume" className="block text-gray-700 font-medium mb-1">Currículo (PDF, DOC, DOCX - máx. 5MB) *</label>
+          <div className="relative border border-gray-300 rounded-md overflow-hidden">
+            <input
+              type="file"
+              id="resume"
+              accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              {...register('resume')}
+              onChange={handleFileChange}
+            />
+            <div className="px-4 py-2 bg-gray-50 flex items-center justify-between">
+              <span className="text-gray-500 truncate">{fileName || 'Escolha um arquivo'}</span>
+              <button type="button" className="px-4 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
+                Procurar
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-6">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-primary hover:bg-yellow-600 text-text font-medium py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {isSubmitting ? 'Enviando...' : 'Enviar currículo'}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default CurriculumForm; 

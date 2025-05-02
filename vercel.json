@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "env": {
+    "RESEND_API_KEY": "re_7hJatVrC_ADLqgWrHg7KDsWputMybxxzc"
+  },
+  "build": {
+    "env": {
+      "RESEND_API_KEY": "re_7hJatVrC_ADLqgWrHg7KDsWputMybxxzc"
+    }
+  }
+} 
