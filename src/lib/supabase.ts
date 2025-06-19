@@ -29,6 +29,26 @@ export type Project = {
   gallery: string[];
   featured: boolean;
   created_at: string;
+  status?: 'disponível' | 'vendido' | 'em_desenvolvimento';
+  price?: number;
+  discount_price?: number;
+  benefits?: string[];
+  technical_details?: {
+    material?: string;
+    acabamento?: string;
+    sistema_hidraulico?: string;
+    garantia?: string;
+    [key: string]: any;
+  };
+  related_products?: number[];
+  tags?: string[];
+  seo_keywords?: string[];
+  seo_description?: string;
+  video_url?: string;
+  model_3d_url?: string;
+  warranty_info?: string;
+  delivery_time?: string;
+  updated_at?: string;
 };
 
 /**
@@ -48,7 +68,12 @@ export function processProject(project: any): Project {
     ...project,
     challenges: project.challenges === null ? [] : (Array.isArray(project.challenges) ? project.challenges : []),
     specifications: project.specifications === null ? [] : (Array.isArray(project.specifications) ? project.specifications : []),
-    gallery: project.gallery === null ? [] : (Array.isArray(project.gallery) ? project.gallery : [])
+    gallery: project.gallery === null ? [] : (Array.isArray(project.gallery) ? project.gallery : []),
+    benefits: project.benefits === null ? [] : (Array.isArray(project.benefits) ? project.benefits : []),
+    tags: project.tags === null ? [] : (Array.isArray(project.tags) ? project.tags : []),
+    seo_keywords: project.seo_keywords === null ? [] : (Array.isArray(project.seo_keywords) ? project.seo_keywords : []),
+    related_products: project.related_products === null ? [] : (Array.isArray(project.related_products) ? project.related_products : []),
+    technical_details: project.technical_details === null ? {} : (typeof project.technical_details === 'object' ? project.technical_details : {})
   };
   
   // Verificar os valores após o processamento

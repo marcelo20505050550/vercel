@@ -31,7 +31,7 @@ export async function getAllProjects(): Promise<Project[]> {
     const { data, error } = await supabase
       .from('projects')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('id', { ascending: false });
 
     if (error) {
       console.error('Erro ao buscar projetos:', error);
@@ -61,7 +61,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       .from('projects')
       .select('*')
       .eq('featured', true)
-      .order('created_at', { ascending: false });
+      .order('id', { ascending: false });
 
     if (error) {
       console.error('Erro ao buscar projetos em destaque:', error);
@@ -174,6 +174,95 @@ export async function getRandomProjects(limit = 3): Promise<Project[]> {
     return processedData.slice(0, limit);
   } catch (err) {
     console.error('Exceção ao buscar projetos aleatórios:', err);
+    return [];
+  }
+}
+
+/**
+ * Obtém projetos por categoria
+ * @param category Categoria para filtrar
+ * @returns Lista de projetos da categoria
+ */
+export async function getProjectsByCategory(category: string): Promise<Project[]> {
+  try {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('category', category)
+      .order('id', { ascending: false });
+
+    if (error) {
+      console.error(`Erro ao buscar projetos da categoria ${category}:`, error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error(`Erro ao buscar projetos da categoria ${category}:`, error);
+    return [];
+  }
+}
+
+/**
+ * Obtém projetos por status
+ * @param status Status para filtrar (disponível, vendido, em_desenvolvimento)
+ * @param limit Limite de projetos a retornar
+ * @returns Lista de projetos com o status especificado
+ */
+export async function getProjectsByStatus(status: string, limit?: number): Promise<Project[]> {
+  try {
+    let query = supabase
+      .from('projects')
+      .select('*')
+      .eq('status', status)
+      .order('id', { ascending: false });
+    
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error(`Erro ao buscar projetos com status ${status}:`, error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error(`Erro ao buscar projetos com status ${status}:`, error);
+    return [];
+  }
+}
+
+/**
+ * Busca projetos por tags
+ * @param tag Tag para buscar
+ * @param limit Limite de projetos a retornar
+ * @returns Lista de projetos que contêm a tag
+ */
+export async function getProjectsByTag(tag: string, limit?: number): Promise<Project[]> {
+  try {
+    let query = supabase
+      .from('projects')
+      .select('*')
+      .contains('tags', [tag])
+      .order('id', { ascending: false });
+    
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error(`Erro ao buscar projetos com a tag ${tag}:`, error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error(`Erro ao buscar projetos com a tag ${tag}:`, error);
     return [];
   }
 } 

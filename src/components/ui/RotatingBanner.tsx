@@ -1,343 +1,367 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, TouchEvent, MouseEvent } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
 
-export interface BannerItem {
+// Hook para lidar com dimensões da tela de forma segura no SSR
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: 1200, // Valor padrão
+    height: 600  // Valor padrão
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Definir tamanho inicial
+    if (typeof window !== 'undefined') {
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
+  return windowSize;
+};
+
+// Componente de texto animado com palavras aparecendo uma por uma (evita corte)
+const AnimatedText = ({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) => {
+  const words = text.split(' ');
+  
+  return (
+    <span className={`${className} inline-flex flex-wrap justify-center items-center gap-x-2`}>
+      {words.map((word, wordIndex) => (
+        <motion.span
+          key={wordIndex}
+          initial={{ opacity: 0, y: 50, scale: 0.3 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 0.6,
+            delay: delay + wordIndex * 0.15,
+            ease: [0.25, 0.4, 0.25, 1]
+          }}
+          className="inline-block whitespace-nowrap"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
+
+// Elemento flutuante animado
+const FloatingElement = ({ 
+  delay = 0, 
+  size = 40, 
+  className = "", 
+  color = "yellow-300" 
+}: { 
+  delay?: number; 
+  size?: number; 
+  className?: string; 
+  color?: string; 
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0, rotate: 0 }}
+      animate={{ 
+        opacity: [0, 1, 1, 0],
+        scale: [0, 1, 1.2, 0],
+        rotate: [0, 180, 360],
+        y: [0, -20, 0]
+      }}
+      transition={{
+        duration: 4,
+        delay,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut"
+      }}
+      className={`absolute ${className}`}
+      style={{ width: size, height: size }}
+    >
+      <div className={`w-full h-full bg-${color} rounded-full shadow-lg`} />
+    </motion.div>
+  );
+};
+
+// Formas geométricas flutuantes
+const GeometricShape = ({ 
+  type = "circle", 
+  delay = 0, 
+  size = 60, 
+  className = "",
+  color = "yellow-500"
+}: { 
+  type?: "circle" | "square" | "triangle"; 
+  delay?: number; 
+  size?: number; 
+  className?: string;
+  color?: string;
+}) => {
+  const shapeVariants = {
+    initial: { opacity: 0, scale: 0, rotate: 0 },
+    animate: { 
+      opacity: [0, 0.7, 0.7, 0],
+      scale: [0, 1, 1.1, 0],
+      rotate: [0, 90, 180, 270],
+      y: [0, -30, -60, -90]
+    }
+  };
+
+  const getShape = () => {
+    switch (type) {
+      case "square":
+        return <div className={`w-full h-full bg-${color} rounded-lg`} />;
+      case "triangle":
+        return <div className={`w-0 h-0 border-l-[${size/2}px] border-r-[${size/2}px] border-b-[${size}px] border-l-transparent border-r-transparent border-b-${color}`} />;
+      default:
+        return <div className={`w-full h-full bg-${color} rounded-full`} />;
+    }
+  };
+
+  return (
+    <motion.div
+      variants={shapeVariants}
+      initial="initial"
+      animate="animate"
+      transition={{
+        duration: 6,
+        delay,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut"
+      }}
+      className={`absolute ${className}`}
+      style={{ width: size, height: size }}
+    >
+      {getShape()}
+    </motion.div>
+  );
+};
+
+// Partículas flutuantes
+const ParticleField = () => {
+  const particles = Array.from({ length: 15 }, (_, i) => i);
+  const { width, height } = useWindowSize();
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      {particles.map((particle) => (
+        <motion.div
+          key={particle}
+          initial={{ 
+            x: Math.random() * width,
+            y: height + 50,
+            opacity: 0
+          }}
+          animate={{
+            y: -50,
+            opacity: [0, 1, 0],
+          }}
+          transition={{
+            duration: Math.random() * 3 + 4,
+            delay: Math.random() * 2,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute w-2 h-2 bg-yellow-400 rounded-full"
+        />
+      ))}
+    </div>
+  );
+};
+
+// Interface para o banner
+interface BannerSlide {
   id: number;
   title: string;
   subtitle: string;
   description: string;
   buttonText: string;
   buttonLink: string;
-  imageSrc: string;
-  customBackground?: string; // URL para um fundo personalizado (desktop)
-  mobileBgImage?: string; // URL para um fundo personalizado em dispositivos móveis
-  useOnlyBackground?: boolean; // Indica se deve usar apenas o fundo personalizado sem imagem
-  contentPosition?: 'left' | 'center' | 'right'; // Posição do conteúdo quando useOnlyBackground é true
-  textColor?: string; // Cor do texto quando usar fundo personalizado
-  hideText?: boolean; // Nova propriedade para esconder todos os textos
 }
 
-interface RotatingBannerProps {
-  banners: BannerItem[];
-  autoPlay?: boolean;
-  autoPlayInterval?: number;
-}
-
-const RotatingBanner = ({ 
-  banners,
-  autoPlay = true, 
-  autoPlayInterval = 30000 
-}: RotatingBannerProps) => {
-  const [currentBanner, setCurrentBanner] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const startXRef = useRef<number | null>(null);
-  const [isSwiping, setIsSwiping] = useState(false);
-
-  const goToNextBanner = useCallback(() => {
-    setIsAnimating(true);
-    setIsVisible(false);
-    
-    setTimeout(() => {
-      setCurrentBanner((prevIndex) => (prevIndex + 1) % banners.length);
-      setIsAnimating(false);
-      
-      setTimeout(() => {
-        setIsVisible(true);
-      }, 100);
-    }, 500);
-  }, [banners.length]);
-
-  const goToPrevBanner = useCallback(() => {
-    setIsAnimating(true);
-    setIsVisible(false);
-    
-    setTimeout(() => {
-      setCurrentBanner((prevIndex) => (prevIndex - 1 + banners.length) % banners.length);
-      setIsAnimating(false);
-      
-      setTimeout(() => {
-        setIsVisible(true);
-      }, 100);
-    }, 500);
-  }, [banners.length]);
-
-  const goToBanner = (index: number) => {
-    if (index === currentBanner) return;
-    setIsAnimating(true);
-    setIsVisible(false);
-    
-    setTimeout(() => {
-      setCurrentBanner(index);
-      setIsAnimating(false);
-      
-      setTimeout(() => {
-        setIsVisible(true);
-      }, 100);
-    }, 500);
-  };
-
-  // Manipuladores de eventos de toque (touch)
-  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    if (isAnimating) return;
-    startXRef.current = e.touches[0].clientX;
-    setIsSwiping(true);
-  };
-
-  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    if (!startXRef.current || !isSwiping) return;
-  };
-
-  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
-    if (!startXRef.current || !isSwiping || isAnimating) return;
-    
-    const endX = e.changedTouches[0].clientX;
-    const diffX = endX - startXRef.current;
-    
-    // Se o deslizamento for maior que 50px, muda o banner
-    if (Math.abs(diffX) > 50) {
-      if (diffX > 0) {
-        goToPrevBanner();
-      } else {
-        goToNextBanner();
-      }
+const ModernAnimatedBanner: React.FC = () => {
+  const slides: BannerSlide[] = [
+    {
+      id: 1,
+      title: "Projetos Únicos, Resultados Reais",
+      subtitle: "Máquinas sob medida para sua necessidade.",
+      description: "Desenvolvemos soluções técnicas para processos específicos. Alta performance com segurança e personalização.",
+      buttonText: "Projetos",
+      buttonLink: "/projetos"
+    },
+    {
+      id: 2,
+      title: "Soluções Integradas para Indústria",
+      subtitle: "Tecnologia e precisão em cada detalhe",
+      description: "Oferecemos soluções completas que unem tecnologia avançada e expertise técnica para atender às necessidades específicas do seu negócio.",
+      buttonText: "Serviços",
+      buttonLink: "/servicos"
+    },
+    {
+      id: 3,
+      title: "Eficiência no Campo Começa Aqui",
+      subtitle: "Implementos resistentes, pensados para o produtor.",
+      description: "Grades, roçadeiras e guinchos com desempenho superior. Equipamentos robustos para aumentar sua produção.",
+      buttonText: "Fale Conosco",
+      buttonLink: "/contato"
     }
-    
-    startXRef.current = null;
-    setIsSwiping(false);
-  };
+  ];
 
-  // Manipuladores de eventos de mouse
-  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
-    if (isAnimating) return;
-    startXRef.current = e.clientX;
-    setIsSwiping(true);
-  };
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!startXRef.current || !isSwiping) return;
-  };
-
-  const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
-    if (!startXRef.current || !isSwiping || isAnimating) return;
-    
-    const diffX = e.clientX - startXRef.current;
-    
-    // Se o deslizamento for maior que 50px, muda o banner
-    if (Math.abs(diffX) > 50) {
-      if (diffX > 0) {
-        goToPrevBanner();
-      } else {
-        goToNextBanner();
-      }
-    }
-    
-    startXRef.current = null;
-    setIsSwiping(false);
-  };
-
-  const handleMouseLeave = () => {
-    if (isSwiping) {
-      startXRef.current = null;
-      setIsSwiping(false);
-    }
-  };
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Iniciar com o primeiro banner visível
-    setIsVisible(true);
-    
-    let interval: NodeJS.Timeout;
-    if (autoPlay && !isSwiping) {
-      interval = setInterval(goToNextBanner, autoPlayInterval);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [autoPlay, autoPlayInterval, goToNextBanner, isSwiping]);
+    const timer = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+        setIsVisible(true);
+      }, 500);
+    }, 8000);
+
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
   return (
-    <div 
-      ref={containerRef}
-      className="relative w-full h-[500px] md:h-[850px] overflow-hidden rounded-lg shadow-xl cursor-grab active:cursor-grabbing"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* Fundo cinza-prata padrão */}
-      <div className="absolute inset-0 bg-[#A9A9A9] z-0">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM1NTUiIGZpbGwtb3BhY2l0eT0iLjA1Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTZ2LTJoLTJ2Mmg0djJ6bTAtNGgtNHYtMmg0djJ6bTAtNGgtNHYtMmg0djJ6bTAtNGgtNHYtMmg0djJ6bTAgMTZoLTR2LTJoNHYyem0wLTE0aC0ydi0yaDJ2MnptMC00aC0ydi0yaDJ2MnptMi0yaC0ydjJoMnYtMnptMCAxNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgNGgtMnYyaDJ2LTJ6bTAgMjB2LTJoLTJ2Mmg0elYxNGgtMnYtNGgtNFY4aC00VjZoLTJ2Mkg4djJINnY0SDR2NGgtMnYySDB2NEgydjJoMnYyaDJ2NGg0djJoMnYyaDJ2Mkg4djJoNHY0aDR2Mmg0djJoMnYyaDZ2LTJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
-        </div>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent opacity-50"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent opacity-50"></div>
+    <section className="relative w-full h-[600px] bg-white overflow-hidden">
+      {/* Elementos de fundo animados */}
+      <div className="absolute inset-0">
+        {/* Formas geométricas flutuantes */}
+        <GeometricShape type="circle" delay={0.5} size={80} className="left-[10%] top-[20%]" color="yellow-200" />
+        <GeometricShape type="square" delay={1.2} size={60} className="right-[15%] top-[15%]" color="yellow-300" />
+        <GeometricShape type="triangle" delay={0.8} size={70} className="left-[20%] bottom-[25%]" color="yellow-500" />
+        <GeometricShape type="circle" delay={1.5} size={50} className="right-[25%] bottom-[20%]" color="yellow-600" />
+        
+        {/* Elementos flutuantes menores */}
+        <FloatingElement delay={2} size={30} className="left-[5%] top-[60%]" color="yellow-400" />
+        <FloatingElement delay={2.5} size={25} className="right-[8%] top-[45%]" color="yellow-500" />
+        <FloatingElement delay={3} size={35} className="left-[60%] top-[80%]" color="yellow-300" />
+        <FloatingElement delay={1.8} size={20} className="right-[45%] top-[25%]" color="yellow-600" />
       </div>
 
-      {/* Banner items */}
-      {banners.map((banner, index) => (
-        <div
-          key={banner.id}
-          className={`absolute inset-0 w-full h-full transition-all duration-700 ${
-            index === currentBanner 
-              ? isAnimating 
-                ? 'opacity-30 scale-105' 
-                : 'opacity-100 scale-100 z-10'
-              : 'opacity-0 scale-95 -z-10'
-          }`}
-        >
-          {/* Fundo personalizado para desktop e mobile */}
-          {(banner.customBackground || banner.mobileBgImage) && (
-            <>
-              {/* Fundo para desktop - visível apenas em telas médias e maiores */}
-              {banner.customBackground && (
-                <div 
-                  className="absolute inset-0 z-0 hidden md:block" 
-                  style={{ 
-                    backgroundImage: `url(${banner.customBackground})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
-                  }}
-                />
-              )}
-              
-              {/* Fundo para mobile - visível apenas em telas pequenas */}
-              {banner.mobileBgImage && (
-                <div 
-                  className="absolute inset-0 z-0 block md:hidden" 
-                  style={{ 
-                    backgroundImage: `url(${banner.mobileBgImage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
-                  }}
-                />
-              )}
-            </>
-          )}
-          
-          <div className="container-custom h-full relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-center">
-              {/* Imagem à direita - apenas visível em desktop e se não for apenas fundo */}
-              {!banner.useOnlyBackground && (
-                <div className="relative h-full hidden md:flex items-center justify-center md:order-1">
-                  <div className="relative" style={{ width: '100%', maxWidth: '777px', height: 'auto', maxHeight: '850px' }}>
-                    <div className="flex items-center justify-center">
-                      <Image
-                        src={banner.imageSrc}
-                        alt={banner.title}
-                        width={777}
-                        height={777}
-                        className="object-contain max-h-[850px]"
-                        priority={index === 0}
-                        draggable={false}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {/* Conteúdo - ocupa toda largura em mobile ou quando usar apenas fundo */}
-              <div className={`flex h-full items-center order-1 py-4 md:py-0 md:order-2 ${
-                banner.useOnlyBackground ? 'col-span-2' : ''} ${
-                banner.useOnlyBackground && banner.contentPosition ? 
-                  banner.contentPosition === 'center' ? 'justify-center text-center' : 
-                  banner.contentPosition === 'right' ? 'justify-end text-right' : 
-                  'justify-start text-left' : ''}`
-              }>
-                {/* Se hideText for true, não exibe o conteúdo de texto */}
-                {!banner.hideText && (
-                  <div className={`text-gray-800 w-full ${banner.useOnlyBackground ? 'md:max-w-lg px-6' : ''}`}
-                      style={banner.textColor ? { color: banner.textColor } : {}}>
-                    <h2 
-                      className={`text-2xl md:text-5xl font-bold mb-2 transition-all duration-1000 
-                        ${isVisible && index === currentBanner ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-                      style={{
-                        color: banner.textColor || 'inherit',
-                        textShadow: '0 0 3px #fff, 0 0 4px #fff, 0 0 6px #fff' // Borda branca maior
-                      }}
-                    >
-                      {banner.title}
-                    </h2>
-                    <div className={`w-20 h-1 bg-primary mb-4 md:mb-6 transition-all duration-1000 delay-100
-                      ${isVisible && index === currentBanner ? 'w-20 opacity-100' : 'w-0 opacity-0'} ${
-                      banner.useOnlyBackground && banner.contentPosition === 'center' ? 'mx-auto' : 
-                      banner.useOnlyBackground && banner.contentPosition === 'right' ? 'ml-auto' : ''}`}>
-                    </div>
-                    <h3 
-                      className={`text-lg md:text-2xl font-semibold mb-2 md:mb-4 text-gray-600 transition-all duration-1000 delay-200
-                        ${isVisible && index === currentBanner ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-                      style={{
-                        color: banner.textColor ? `${banner.textColor}cc` : 'inherit',
-                        textShadow: '0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff' // Borda branca maior
-                      }}
-                    >
-                      {banner.subtitle}
-                    </h3>
-                    <p 
-                      className={`text-sm md:text-lg mb-4 md:mb-8 text-gray-700 line-clamp-3 md:line-clamp-none transition-all duration-1000 delay-300
-                        ${isVisible && index === currentBanner ? 'translate-y-0 opacity-90' : 'translate-y-6 opacity-0'}`}
-                      style={{
-                        color: banner.textColor ? `${banner.textColor}aa` : 'inherit',
-                        textShadow: '0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff' // Borda branca maior
-                      }}
-                    >
-                      {banner.description}
-                    </p>
-                    
-                    {/* Mostrar botão apenas se houver texto e link */}
-                    {banner.buttonText && banner.buttonLink && (
-                      <div 
-                        className={`transition-all duration-1000 delay-500
-                          ${isVisible && index === currentBanner ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
-                      >
-                        <Link href={banner.buttonLink} className="bg-primary hover:bg-primary-dark text-text font-bold py-2 px-4 md:py-3 md:px-6 rounded-md transition-all duration-300 inline-flex items-center gap-1 md:gap-2 text-sm md:text-base group ring-2 ring-white">
-                          {banner.buttonText}
-                          <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            className="h-4 w-4 md:h-5 md:w-5 transform transition-transform group-hover:translate-x-1" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
-                            stroke="currentColor"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
+      {/* Partículas flutuantes */}
+      <ParticleField />
 
-      {/* Indicators */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
-        {banners.map((_, index) => (
+      {/* Conteúdo principal */}
+      <div className="relative z-10 h-full flex items-center justify-center">
+        <div className="container mx-auto px-6 md:px-8 lg:px-12 text-center">
+          <AnimatePresence mode="wait">
+            {isVisible && (
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="max-w-4xl mx-auto"
+              >
+                {/* Badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-100 border border-yellow-300 mb-6"
+                >
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="w-3 h-3 bg-yellow-500 rounded-full"
+                  />
+                  <span className="text-sm text-yellow-800 font-semibold tracking-wide">BoaVentura</span>
+                </motion.div>
+
+                {/* Título principal com animação palavra por palavra */}
+                <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 text-gray-800">
+                  <AnimatedText 
+                    text={slides[currentSlide].title} 
+                    delay={0.5}
+                    className="bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 bg-clip-text text-transparent"
+                  />
+                </h1>
+
+                {/* Subtítulo */}
+                <h2 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-light mb-6 text-gray-700">
+                  <AnimatedText 
+                    text={slides[currentSlide].subtitle} 
+                    delay={1.2}
+                  />
+                </h2>
+
+                {/* Linha decorativa */}
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "120px" }}
+                  transition={{ duration: 1, delay: 2 }}
+                  className="h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto mb-6 rounded-full"
+                />
+
+                {/* Descrição */}
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 2.2 }}
+                  className="text-base md:text-lg lg:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed break-words"
+                >
+                  {slides[currentSlide].description}
+                </motion.p>
+
+                {/* Botão de ação */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 2.6 }}
+                >
+                  <Link
+                    href={slides[currentSlide].buttonLink}
+                    className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg"
+                  >
+                    {slides[currentSlide].buttonText}
+                    <motion.svg 
+                      className="w-5 h-5" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </motion.svg>
+                  </Link>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Indicadores de slide */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
+        {slides.map((_, index) => (
           <button
             key={index}
-            onClick={() => goToBanner(index)}
-            className={`transition-all duration-300 ${
-              index === currentBanner
-                ? 'bg-primary w-10 h-2 rounded-sm'
-                : 'bg-white/30 w-3 h-2 rounded-sm hover:bg-white/60'
+            onClick={() => setCurrentSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide
+                ? 'bg-yellow-500 scale-125'
+                : 'bg-yellow-200 hover:bg-yellow-300'
             }`}
-            aria-label={`Ir para o banner ${index + 1}`}
           />
         ))}
       </div>
-    </div>
+
+      {/* Gradiente sutil para melhor legibilidade */}
+      <div className="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-white/10 pointer-events-none" />
+    </section>
   );
 };
 
-export default RotatingBanner; 
+export default ModernAnimatedBanner; 

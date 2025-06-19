@@ -1,92 +1,91 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
-import { processProject } from '@/lib/supabase';
+import { supabase, processProject } from '@/lib/supabase';
 
 export async function GET() {
+  console.log('Executando script para corrigir arrays nulos...');
+  
   try {
-    console.log('Executando script para corrigir arrays nulos...');
-    
     // Buscar todos os projetos
-    const { data: projects, error: fetchError } = await supabase
+    const { data, error } = await supabase
       .from('projects')
       .select('*');
-    
-    if (fetchError) {
-      console.error('Erro ao buscar projetos:', fetchError);
-      return NextResponse.json({
-        success: false,
-        error: fetchError,
-        message: 'Erro ao buscar projetos'
+      
+    if (error) {
+      console.error('Erro ao buscar projetos:', error);
+      return NextResponse.json({ 
+        success: false, 
+        error: error.message 
       }, { status: 500 });
     }
     
-    console.log(`Encontrados ${projects?.length || 0} projetos`);
+    console.log(`Encontrados ${data?.length || 0} projetos`);
     
-    if (!projects || projects.length === 0) {
-      return NextResponse.json({
-        success: true,
-        message: 'Nenhum projeto encontrado para atualizar'
-      });
-    }
+    // Array para armazenar resultados
+    const results = [];
     
-    // Lista para registrar os projetos que foram atualizados
-    const updatedProjects = [];
-    
-    // Processar e atualizar cada projeto
-    for (const project of projects) {
-      const processedProject = processProject(project);
+    // Processar cada projeto
+    for (const project of data || []) {
+      console.log(`Processando projeto ${project.id} (${project.slug})`);
+      console.log('challenges antes:', project.challenges);
+      console.log('specifications antes:', project.specifications);
+      console.log('gallery antes:', project.gallery);
       
-      // Verificar se algum campo era nulo e foi processado para array vazio
-      const needsUpdate = 
-        (project.challenges === null && Array.isArray(processedProject.challenges)) ||
-        (project.specifications === null && Array.isArray(processedProject.specifications)) ||
-        (project.gallery === null && Array.isArray(processedProject.gallery));
-      
-      if (needsUpdate) {
+      // Verificar se algum campo de array é null
+      if (project.challenges === null || project.specifications === null || project.gallery === null) {
         console.log(`Atualizando projeto com ID ${project.id}, slug: ${project.slug}`);
         
-        // Atualizar o projeto no Supabase
-        const { error: updateError } = await supabase
-          .from('projects')
-          .update({
-            challenges: processedProject.challenges,
-            specifications: processedProject.specifications,
-            gallery: processedProject.gallery
-          })
-          .eq('id', project.id);
+        // Criar objeto com os campos a serem atualizados
+        const updates = {
+          challenges: project.challenges === null ? [] : project.challenges,
+          specifications: project.specifications === null ? [] : project.specifications,
+          gallery: project.gallery === null ? [] : project.gallery
+        };
         
+        // Atualizar o projeto no Supabase
+        const { data: updateData, error: updateError } = await supabase
+          .from('projects')
+          .update(updates)
+          .eq('id', project.id);
+          
         if (updateError) {
           console.error(`Erro ao atualizar projeto ${project.id}:`, updateError);
+          results.push({
+            id: project.id,
+            slug: project.slug,
+            success: false,
+            error: updateError.message
+          });
         } else {
-          updatedProjects.push(project.id);
           console.log(`Projeto ${project.id} atualizado com sucesso`);
+          results.push({
+            id: project.id,
+            slug: project.slug,
+            success: true
+          });
         }
+      } else {
+        console.log(`Projeto ${project.id} não precisa de atualização`);
+        results.push({
+          id: project.id,
+          slug: project.slug,
+          success: true,
+          noUpdateNeeded: true
+        });
       }
     }
     
-    // Buscar projetos atualizados para confirmar
-    const { data: updatedData, error: verifyError } = await supabase
-      .from('projects')
-      .select('id, slug, title, challenges, specifications, gallery');
+    console.log(`Resultado final: ${results.filter(r => r.success && !r.noUpdateNeeded).length} projetos atualizados com sucesso`);
     
-    // Montar resposta com resultados
-    const result = {
-      success: true,
-      updatedCount: updatedProjects.length,
-      updatedIds: updatedProjects,
-      message: `${updatedProjects.length} projetos atualizados com sucesso`,
-      projects: updatedData || []
-    };
+    return NextResponse.json({ 
+      success: true, 
+      results 
+    });
     
-    console.log('Resultado final:', result.message);
-    
-    return NextResponse.json(result);
-  } catch (error) {
-    console.error('Exceção ao tentar corrigir arrays nulos:', error);
-    return NextResponse.json({
-      success: false,
-      error,
-      message: 'Exceção ao tentar corrigir arrays nulos'
+  } catch (err) {
+    console.error('Erro ao executar script:', err);
+    return NextResponse.json({ 
+      success: false, 
+      error: err instanceof Error ? err.message : 'Erro desconhecido' 
     }, { status: 500 });
   }
 } 

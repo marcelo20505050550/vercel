@@ -2,52 +2,43 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
 export async function GET() {
+  console.log('Testando conexão com Supabase...');
+  
   try {
-    console.log('Testando conexão com Supabase...');
-    
-    // Tenta buscar projetos diretamente
-    const { data: projects, error: projectsError } = await supabase
+    // Testar conexão com o Supabase
+    const { data, error } = await supabase
       .from('projects')
-      .select('*')
-      .limit(5);
+      .select('*', { count: 'exact', head: true });
       
-    if (projectsError) {
-      console.error('Erro ao buscar projetos:', projectsError);
-      return NextResponse.json({
-        success: false,
-        error: projectsError,
-        message: 'Erro ao buscar projetos'
+    if (error) {
+      console.error('Erro ao conectar com Supabase:', error);
+      return NextResponse.json({ 
+        success: false, 
+        error: error.message 
       }, { status: 500 });
     }
     
-    // Contar o número total de projetos
-    const { count, error: countError } = await supabase
+    // Buscar uma amostra de projetos
+    const { data: sampleProjects } = await supabase
       .from('projects')
-      .select('*', { count: 'exact', head: true });
+      .select('id, slug, title')
+      .limit(2);
     
-    const result = {
-      success: true,
-      connection: 'OK',
-      projectsTable: {
-        count: projects?.length || 0,
-        totalCount: count || 0,
-        firstProject: projects?.[0] || null,
-        projectFields: projects && projects[0] ? Object.keys(projects[0]) : [],
-        allProjectsData: projects
-      },
-      environment: {
-        url: process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Configurada' : 'Não configurada',
-        key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'Configurada' : 'Não configurada'
-      }
-    };
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Conexão com Supabase estabelecida com sucesso',
+      count: data?.length || 0,
+      sample: sampleProjects || [],
+      url: process.env.NEXT_PUBLIC_SUPABASE_URL || 'Não configurada'
+    });
     
-    return NextResponse.json(result);
-  } catch (error) {
-    console.error('Erro ao testar conexão:', error);
-    return NextResponse.json({
-      success: false,
-      error,
-      message: 'Exceção ao testar conexão com o Supabase'
+  } catch (err) {
+    console.error('Erro ao testar conexão com Supabase:', err);
+    return NextResponse.json({ 
+      success: false, 
+      error: err instanceof Error ? err.message : 'Erro desconhecido',
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || 'Não configurada',
+      supabaseKeyConfigured: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     }, { status: 500 });
   }
 } 

@@ -1,23 +1,25 @@
 import MainLayout from '@/components/layout/MainLayout';
 import ProjectCard from '@/components/ui/ProjectCard';
 import CsvImportInfo from '@/components/ui/CsvImportInfo';
-import RotatingBanner from '@/components/ui/RotatingBanner';
+import PageHeader from '@/components/ui/PageHeader';
 import { getAllProjects } from '@/services/projectService';
-import { projetosBanners } from '@/data/bannerData';
+import { Project } from '@/lib/supabase';
 
 export const revalidate = 10; // Revalidar a página a cada 10 segundos
 
 export default async function ProjetosPage() {
-  // Buscar todos os projetos
-  const allProjects = await getAllProjects();
+  // Buscar todos os projetos com tratamento de erro
+  let allProjects: Project[] = [];
+  try {
+    allProjects = await getAllProjects();
+    console.log(`Carregados ${allProjects.length} projetos com sucesso`);
+  } catch (error) {
+    console.error('Erro ao carregar projetos:', error);
+    // Continuar com array vazio em caso de erro
+  }
 
   return (
     <MainLayout>
-      {/* Banner Rotativo */}
-      <section className="relative overflow-hidden">
-        <RotatingBanner banners={projetosBanners} />
-      </section>
-
       {/* Todos os Projetos */}
       <section id="projetos" className="py-20 bg-white">
         <div className="container-custom">
@@ -26,7 +28,7 @@ export default async function ProjetosPage() {
             <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           </div>
 
-          {allProjects.length > 0 ? (
+          {allProjects && allProjects.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
               {allProjects.map((project) => (
                 <ProjectCard key={project.id} project={project} />

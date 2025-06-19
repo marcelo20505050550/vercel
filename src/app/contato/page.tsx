@@ -1,18 +1,12 @@
 import Image from 'next/image';
 import MainLayout from '@/components/layout/MainLayout';
 import ContactForm from '@/components/ui/ContactForm';
-import RotatingBanner from '@/components/ui/RotatingBanner';
+import PageHeader from '@/components/ui/PageHeader';
 import SimpleCurriculumUpload from '@/components/ui/SimpleCurriculumUpload';
-import { contatoBanners } from '@/data/bannerData';
 
 export default function ContatoPage() {
   return (
     <MainLayout>
-      {/* Banner Rotativo */}
-      <section className="relative overflow-hidden">
-        <RotatingBanner banners={contatoBanners} />
-      </section>
-
       {/* Contact Content */}
       <section id="formulario" className="py-16 bg-white">
         <div className="container-custom">
@@ -34,7 +28,7 @@ export default function ContatoPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-text">Endereço</h3>
-                    <p className="text-gray-dark mt-1">Rua Antônio Stupelli, 676</p>
+                    <p className="text-gray-dark mt-1">Rua Antônio Stupello, 676</p>
                     <p className="text-gray-dark">São Joaquim da Barra - SP</p>
                   </div>
                 </div>
