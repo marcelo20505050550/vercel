@@ -1,79 +1,79 @@
 import { supabase } from '@/lib/supabase';
 
 export interface Produto {
-  id: string;
-  slug: string;
-  title: string;
-  short_description: string;
-  full_description: string;
-  category: 'feitos-na-bv' | 'produtos-bv-boaventura' | 'servicos-terceiros' | 'vendidos-pela-bv';
-  image_url: string;
-  gallery: string[];
-  price?: number;
-  specifications?: string;
-  seo_description?: string;
-  seo_keywords: string[];
-  created_at: string;
-  updated_at: string;
+    id: string;
+    slug: string;
+    title: string;
+    short_description: string;
+    full_description: string;
+    category: 'feitos-na-bv' | 'produtos-bv-boaventura' | 'servicos-terceiros' | 'vendidos-pela-bv';
+    image_url: string;
+    gallery: string[];
+    price?: number;
+    specifications?: string;
+    seo_description?: string;
+    seo_keywords: string[];
+    created_at: string;
+    updated_at: string;
 }
 
 export async function getProdutosByCategory(category: string): Promise<Produto[]> {
-  const { data, error } = await supabase
-    .from('produtos')
-    .select('*')
-    .eq('category', category)
-    .order('created_at', { ascending: false });
+    const { data, error } = await supabase
+        .from('produtos')
+        .select('*')
+        .eq('category', category)
+        .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error('Erro ao buscar produtos:', error);
-    return [];
-  }
+    if (error) {
+        console.error('Erro ao buscar produtos:', error);
+        return [];
+    }
 
-  return data || [];
+    return data || [];
 }
 
 export async function getProdutoBySlug(slug: string, category: string): Promise<Produto | null> {
-  const { data, error } = await supabase
-    .from('produtos')
-    .select('*')
-    .eq('slug', slug)
-    .eq('category', category)
-    .single();
+    const { data, error } = await supabase
+        .from('produtos')
+        .select('*')
+        .eq('slug', slug)
+        .eq('category', category)
+        .single();
 
-  if (error) {
-    console.error('Erro ao buscar produto:', error);
-    return null;
-  }
+    if (error) {
+        console.error('Erro ao buscar produto:', error);
+        return null;
+    }
 
-  return data;
+    return data;
 }
 
 export async function getAllProdutos(): Promise<Produto[]> {
-  const { data, error } = await supabase
-    .from('produtos')
-    .select('*')
-    .order('created_at', { ascending: false });
+    const { data, error } = await supabase
+        .from('produtos')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error('Erro ao buscar todos os produtos:', error);
-    return [];
-  }
+    if (error) {
+        console.error('Erro ao buscar todos os produtos:', error);
+        return [];
+    }
 
-  return data || [];
+    return data || [];
 }
 
 export async function getRandomProdutos(limit: number = 6): Promise<Produto[]> {
-  const { data, error } = await supabase
-    .from('produtos')
-    .select('*')
-    .limit(limit);
+    const { data, error } = await supabase
+        .from('produtos')
+        .select('*')
+        .limit(limit);
 
-  if (error) {
-    console.error('Erro ao buscar produtos aleatórios:', error);
-    return [];
-  }
+    if (error) {
+        console.error('Erro ao buscar produtos aleatórios:', error);
+        return [];
+    }
 
-  // Embaralhar os resultados
-  const shuffled = (data || []).sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, limit);
+    // Embaralhar os resultados
+    const shuffled = (data || []).sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, limit);
 }
