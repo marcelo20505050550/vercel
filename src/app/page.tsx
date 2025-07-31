@@ -4,7 +4,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import ServicesSection from '@/components/ui/ServicesSection';
 import AboutSection from '@/components/ui/AboutSection';
 import ModernAnimatedBanner from '@/components/ui/RotatingBanner';
-import RandomProducts from '@/components/ui/RandomProducts';
+import FeaturedProductsSection from '@/components/ui/FeaturedProductsSection';
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       </section>
 
       {/* Produtos em Destaque */}
-      <RandomProducts />
+      <FeaturedProductsSection />
 
       {/* Sobre Section - Moderno */}
       <AboutSection />

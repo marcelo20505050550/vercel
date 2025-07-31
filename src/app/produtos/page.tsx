@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import MainLayout from '@/components/layout/MainLayout';
 import ProdutosPageContent from '@/components/ui/ProdutosPageContent';
+import FeaturedProductsSection from '@/components/ui/FeaturedProductsSection';
 
 export const metadata: Metadata = {
   title: 'Produtos | BV Boaventura',
@@ -12,6 +13,7 @@ export default function ProdutosPage() {
   return (
     <MainLayout>
       <ProdutosPageContent />
+      <FeaturedProductsSection />
     </MainLayout>
   );
 }
