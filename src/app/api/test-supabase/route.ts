@@ -7,7 +7,7 @@ export async function GET() {
   try {
     // Testar conexão com o Supabase
     const { data, error } = await supabase
-      .from('projects')
+      .from('produtos')
       .select('*', { count: 'exact', head: true });
       
     if (error) {
@@ -28,7 +28,7 @@ export async function GET() {
       success: true, 
       message: 'Conexão com Supabase estabelecida com sucesso',
       count: data?.length || 0,
-      sample: sampleProjects || [],
+      sample: sampleProducts || [],
       url: process.env.NEXT_PUBLIC_SUPABASE_URL || 'Não configurada'
     });
     

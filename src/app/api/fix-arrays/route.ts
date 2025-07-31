@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase, processProject } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 export async function GET() {
   console.log('Executando script para corrigir arrays nulos...');
@@ -23,51 +23,49 @@ export async function GET() {
     // Array para armazenar resultados
     const results = [];
     
-    // Processar cada projeto
-    for (const project of data || []) {
-      console.log(`Processando projeto ${project.id} (${project.slug})`);
-      console.log('challenges antes:', project.challenges);
-      console.log('specifications antes:', project.specifications);
-      console.log('gallery antes:', project.gallery);
+    // Processar cada produto
+    for (const produto of data || []) {
+      console.log(`Processando produto ${produto.id} (${produto.slug})`);
+      console.log('gallery antes:', produto.gallery);
+      console.log('seo_keywords antes:', produto.seo_keywords);
       
       // Verificar se algum campo de array é null
-      if (project.challenges === null || project.specifications === null || project.gallery === null) {
-        console.log(`Atualizando projeto com ID ${project.id}, slug: ${project.slug}`);
+      if (produto.gallery === null || produto.seo_keywords === null) {
+        console.log(`Atualizando produto com ID ${produto.id}, slug: ${produto.slug}`);
         
         // Criar objeto com os campos a serem atualizados
         const updates = {
-          challenges: project.challenges === null ? [] : project.challenges,
-          specifications: project.specifications === null ? [] : project.specifications,
-          gallery: project.gallery === null ? [] : project.gallery
+          gallery: produto.gallery === null ? [] : produto.gallery,
+          seo_keywords: produto.seo_keywords === null ? [] : produto.seo_keywords
         };
         
-        // Atualizar o projeto no Supabase
+        // Atualizar o produto no Supabase
         const { data: updateData, error: updateError } = await supabase
-          .from('projects')
+          .from('produtos')
           .update(updates)
-          .eq('id', project.id);
+          .eq('id', produto.id);
           
         if (updateError) {
-          console.error(`Erro ao atualizar projeto ${project.id}:`, updateError);
+          console.error(`Erro ao atualizar produto ${produto.id}:`, updateError);
           results.push({
-            id: project.id,
-            slug: project.slug,
+            id: produto.id,
+            slug: produto.slug,
             success: false,
             error: updateError.message
           });
         } else {
-          console.log(`Projeto ${project.id} atualizado com sucesso`);
+          console.log(`Produto ${produto.id} atualizado com sucesso`);
           results.push({
-            id: project.id,
-            slug: project.slug,
+            id: produto.id,
+            slug: produto.slug,
             success: true
           });
         }
       } else {
-        console.log(`Projeto ${project.id} não precisa de atualização`);
+        console.log(`Produto ${produto.id} não precisa de atualização`);
         results.push({
-          id: project.id,
-          slug: project.slug,
+          id: produto.id,
+          slug: produto.slug,
           success: true,
           noUpdateNeeded: true
         });
