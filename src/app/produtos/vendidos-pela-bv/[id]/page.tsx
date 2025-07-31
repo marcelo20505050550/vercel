@@ -5,14 +5,15 @@ import ProdutoDetailPage from '@/components/ui/ProdutoDetailPage';
 import { supabase } from '@/lib/supabase';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
   const { data: produto } = await supabase
     .from('produtos')
     .select('title, short_description, seo_description, seo_keywords')
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('category', 'vendidos-pela-bv')
     .single();
 
@@ -30,10 +31,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function VendidoPelaBVDetailPage({ params }: Props) {
+  const { id } = await params;
   const { data: produto, error } = await supabase
     .from('produtos')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('category', 'vendidos-pela-bv')
     .single();
 
