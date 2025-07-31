@@ -30,25 +30,17 @@ const categoryColors = {
   'servicos-terceiros': 'bg-purple-500 text-white'
 };
 
-interface FeaturedProductsSectionProps {
-  showFilters?: boolean;
-  title?: string;
-  description?: string;
-}
-
-export default function FeaturedProductsSection({ 
-  showFilters = true, 
-  title = "Produtos em Destaque",
-  description = "Explore nossa linha completa de produtos industriais e implementos agrícolas"
-}: FeaturedProductsSectionProps) {
+export default function HomeFeaturedProducts() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [filteredProdutos, setFilteredProdutos] = useState<Produto[]>([]);
+  const [displayedProdutos, setDisplayedProdutos] = useState<Produto[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>('todos');
-  const [categories, setCategories] = useState<string[]>([]);
+  const [showAll, setShowAll] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const INITIAL_LIMIT = 3;
 
   useEffect(() => {
-    async function fetchAllProducts() {
+    async function fetchProducts() {
       const { data, error } = await supabase
         .from('produtos')
         .select('*')
@@ -56,25 +48,26 @@ export default function FeaturedProductsSection({
 
       if (!error && data) {
         setProdutos(data);
-        setFilteredProdutos(data);
+        setTotalCount(data.length);
         
-        // Extrair categorias únicas
-        const uniqueCategories = Array.from(new Set(data.map(p => p.category)));
-        setCategories(uniqueCategories);
+        // Mostrar apenas os primeiros 3 produtos inicialmente
+        setDisplayedProdutos(data.slice(0, INITIAL_LIMIT));
       }
       setLoading(false);
     }
 
-    fetchAllProducts();
+    fetchProducts();
   }, []);
 
-  useEffect(() => {
-    if (selectedCategory === 'todos') {
-      setFilteredProdutos(produtos);
+  const handleShowMore = () => {
+    if (showAll) {
+      setDisplayedProdutos(produtos.slice(0, INITIAL_LIMIT));
+      setShowAll(false);
     } else {
-      setFilteredProdutos(produtos.filter(p => p.category === selectedCategory));
+      setDisplayedProdutos(produtos);
+      setShowAll(true);
     }
-  }, [selectedCategory, produtos]);
+  };
 
   if (loading) {
     return (
@@ -88,18 +81,9 @@ export default function FeaturedProductsSection({
               <div className="h-4 bg-gray-200 rounded w-64 mx-auto"></div>
             </div>
           </div>
-          
-          {/* Filter buttons skeleton */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {[...Array(5)].map((_, index) => (
-              <div key={index} className="animate-pulse">
-                <div className="h-10 bg-gray-200 rounded-full w-24"></div>
-              </div>
-            ))}
-          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, index) => (
+            {[...Array(3)].map((_, index) => (
               <div key={index} className="animate-pulse">
                 <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
                 <div className="h-4 bg-gray-200 rounded mb-2"></div>
@@ -139,65 +123,26 @@ export default function FeaturedProductsSection({
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-            {title}
+            Produtos em Destaque
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {description}
+            Conheça alguns dos nossos produtos mais procurados e inovadores
           </p>
         </motion.div>
 
-        {/* Category Filter */}
-        {showFilters && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-4 mb-12"
-          >
-            <button
-              onClick={() => setSelectedCategory('todos')}
-              className={`px-6 py-2 rounded-full transition-all duration-300 ${
-                selectedCategory === 'todos'
-                  ? 'bg-yellow-500 text-white shadow-lg'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Todos ({produtos.length})
-            </button>
-            
-            {categories.map((category) => {
-              const count = produtos.filter(p => p.category === category).length;
-              return (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
-                    selectedCategory === category
-                      ? 'bg-yellow-500 text-white shadow-lg'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {categoryLabels[category as keyof typeof categoryLabels] || category} ({count})
-                </button>
-              );
-            })}
-          </motion.div>
-        )}
-
         {/* Products Grid */}
         <motion.div
-          key={selectedCategory}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {filteredProdutos.map((produto, index) => (
+          {displayedProdutos.map((produto, index) => (
             <motion.div
               key={produto.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 * (index % 6) }}
+              transition={{ duration: 0.6, delay: 0.1 * index }}
             >
               <Link href={`/produtos/${produto.category}/${produto.id}`}>
                 <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer">
@@ -244,27 +189,37 @@ export default function FeaturedProductsSection({
           ))}
         </motion.div>
 
-        {/* Show message if no products in selected category */}
-        {filteredProdutos.length === 0 && selectedCategory !== 'todos' && (
+        {/* Action Buttons */}
+        <div className="text-center mt-12 space-y-4">
+          {/* Show More/Less Button - only if there are more than 3 products */}
+          {totalCount > INITIAL_LIMIT && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <button
+                onClick={handleShowMore}
+                className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all duration-300 mr-4"
+              >
+                {showAll ? 'Ver Menos Produtos' : `Ver Mais Produtos (${totalCount - INITIAL_LIMIT} restantes)`}
+              </button>
+            </motion.div>
+          )}
+          
+          {/* View All Categories Button */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-12"
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <p className="text-lg text-gray-600">
-              Nenhum produto encontrado na categoria selecionada.
-            </p>
+            <Link
+              href="/produtos"
+              className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-lg hover:from-yellow-500 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Explorar Todas as Categorias
+            </Link>
           </motion.div>
-        )}
-
-        {/* View All Products Button */}
-        <div className="text-center mt-12">
-          <Link
-            href="/produtos"
-            className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-lg hover:from-yellow-500 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Ver Todas as Categorias
-          </Link>
         </div>
       </div>
     </section>
