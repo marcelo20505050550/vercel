@@ -49,7 +49,7 @@ export default function FeaturedProductsSection() {
         setFilteredProdutos(data);
         
         // Extrair categorias únicas
-        const uniqueCategories = [...new Set(data.map(p => p.category))];
+        const uniqueCategories = Array.from(new Set(data.map(p => p.category)));
         setCategories(uniqueCategories);
       }
       setLoading(false);
