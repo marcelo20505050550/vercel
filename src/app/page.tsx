@@ -4,7 +4,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import ServicesSection from '@/components/ui/ServicesSection';
 import AboutSection from '@/components/ui/AboutSection';
 import ModernAnimatedBanner from '@/components/ui/RotatingBanner';
-import RandomProjects from '@/components/ui/RandomProjects';
+import RandomProducts from '@/components/ui/RandomProducts';
 
 export default function Home() {
   return (
@@ -14,8 +14,8 @@ export default function Home() {
         <ModernAnimatedBanner />
       </section>
 
-      {/* Projetos Aleatórios */}
-      <RandomProjects />
+      {/* Produtos em Destaque */}
+      <RandomProducts />
 
       {/* Sobre Section - Moderno */}
       <AboutSection />

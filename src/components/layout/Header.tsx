@@ -39,8 +39,8 @@ const Header = () => {
             <Link href="/servicos" className="text-text hover:text-primary font-medium transition-colors">
               Serviços
             </Link>
-            <Link href="/projetos" className="text-text hover:text-primary font-medium transition-colors">
-              Projetos
+            <Link href="/produtos" className="text-text hover:text-primary font-medium transition-colors">
+              Produtos
             </Link>
             <Link href="/contato#curriculos" className="text-text hover:text-primary font-medium transition-colors">
               Trabalhe Conosco
@@ -114,8 +114,8 @@ const Header = () => {
               <Link href="/servicos" className="text-text hover:text-primary font-medium transition-colors">
                 Serviços
               </Link>
-              <Link href="/projetos" className="text-text hover:text-primary font-medium transition-colors">
-                Projetos
+              <Link href="/produtos" className="text-text hover:text-primary font-medium transition-colors">
+                Produtos
               </Link>
               <Link href="/contato#curriculos" className="text-text hover:text-primary font-medium transition-colors">
                 Trabalhe Conosco

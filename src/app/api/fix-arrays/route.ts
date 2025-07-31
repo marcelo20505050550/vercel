@@ -5,20 +5,20 @@ export async function GET() {
   console.log('Executando script para corrigir arrays nulos...');
   
   try {
-    // Buscar todos os projetos
+    // Buscar todos os produtos
     const { data, error } = await supabase
-      .from('projects')
+      .from('produtos')
       .select('*');
       
     if (error) {
-      console.error('Erro ao buscar projetos:', error);
+      console.error('Erro ao buscar produtos:', error);
       return NextResponse.json({ 
         success: false, 
         error: error.message 
       }, { status: 500 });
     }
     
-    console.log(`Encontrados ${data?.length || 0} projetos`);
+    console.log(`Encontrados ${data?.length || 0} produtos`);
     
     // Array para armazenar resultados
     const results = [];
@@ -74,7 +74,7 @@ export async function GET() {
       }
     }
     
-    console.log(`Resultado final: ${results.filter(r => r.success && !r.noUpdateNeeded).length} projetos atualizados com sucesso`);
+    console.log(`Resultado final: ${results.filter(r => r.success && !r.noUpdateNeeded).length} produtos atualizados com sucesso`);
     
     return NextResponse.json({ 
       success: true, 

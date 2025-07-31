@@ -51,10 +51,23 @@ export default function ServicesPageContent() {
       description: "Desenvolvemos máquinas especiais sob medida para processos industriais específicos, criando soluções exclusivas.",
       color: "from-yellow-200 to-yellow-400",
       features: [
-        "Projetos Exclusivos",
+        "Produtos Exclusivos",
         "Automação Industrial",
         "Modernização de Equipamentos",
         "Soluções Customizadas"
+      ]
+    },
+    {
+      id: "pecas-reposicao",
+      icon: <Settings className="h-8 w-8" />,
+      title: "Peças de Reposição",
+      description: "Componentes sob medida para manutenção e reposição de máquinas, garantindo desempenho contínuo, durabilidade e compatibilidade com seu equipamento.",
+      color: "from-yellow-500 to-yellow-700",
+      features: [
+        "Peças para Implementos Agrícolas",
+        "Componentes de Caldeiraria e Estruturas",
+        "Conjuntos Mecânicos e Hidráulicos",
+        "Personalização sob Demanda"
       ]
     }
   ];

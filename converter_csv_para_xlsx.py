@@ -16,14 +16,14 @@ def parse_arrays(df):
 
 # Ler o arquivo CSV
 try:
-    df = pd.read_csv('projetos_exemplo.csv')
+    df = pd.read_csv('produtos_exemplo.csv')
     print("CSV lido com sucesso!")
     
     # Converter os arrays
     df = parse_arrays(df)
     
     # Salvar como XLSX
-    df.to_excel('projetos_exemplo.xlsx', index=False)
+    df.to_excel('produtos_exemplo.xlsx', index=False)
     print("Arquivo XLSX criado com sucesso!")
     
 except Exception as e:

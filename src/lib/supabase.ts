@@ -9,7 +9,7 @@ console.log('API Key:', supabaseKey ? 'Configurada' : 'Não configurada');
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-export type Project = {
+export type Produto = {
   id: number;
   slug: string;
   title: string;
@@ -52,34 +52,34 @@ export type Project = {
 };
 
 /**
- * Processa um projeto para garantir que campos de array não sejam null
+ * Processa um produto para garantir que campos de array não sejam null
  */
-export function processProject(project: any): Project {
-  if (!project) return project;
+export function processProduto(produto: any): Produto {
+  if (!produto) return produto;
 
   // Verificar os valores antes do processamento
-  console.log(`Processando projeto ${project.id} (${project.slug})`);
-  console.log('challenges antes:', project.challenges);
-  console.log('specifications antes:', project.specifications);
-  console.log('gallery antes:', project.gallery);
+  console.log(`Processando produto ${produto.id} (${produto.slug})`);
+  console.log('challenges antes:', produto.challenges);
+  console.log('specifications antes:', produto.specifications);
+  console.log('gallery antes:', produto.gallery);
   
   // Criar um novo objeto com arrays vazios em vez de null
-  const processedProject = {
-    ...project,
-    challenges: project.challenges === null ? [] : (Array.isArray(project.challenges) ? project.challenges : []),
-    specifications: project.specifications === null ? [] : (Array.isArray(project.specifications) ? project.specifications : []),
-    gallery: project.gallery === null ? [] : (Array.isArray(project.gallery) ? project.gallery : []),
-    benefits: project.benefits === null ? [] : (Array.isArray(project.benefits) ? project.benefits : []),
-    tags: project.tags === null ? [] : (Array.isArray(project.tags) ? project.tags : []),
-    seo_keywords: project.seo_keywords === null ? [] : (Array.isArray(project.seo_keywords) ? project.seo_keywords : []),
-    related_products: project.related_products === null ? [] : (Array.isArray(project.related_products) ? project.related_products : []),
-    technical_details: project.technical_details === null ? {} : (typeof project.technical_details === 'object' ? project.technical_details : {})
+  const processedProduto = {
+    ...produto,
+    challenges: produto.challenges === null ? [] : (Array.isArray(produto.challenges) ? produto.challenges : []),
+    specifications: produto.specifications === null ? [] : (Array.isArray(produto.specifications) ? produto.specifications : []),
+    gallery: produto.gallery === null ? [] : (Array.isArray(produto.gallery) ? produto.gallery : []),
+    benefits: produto.benefits === null ? [] : (Array.isArray(produto.benefits) ? produto.benefits : []),
+    tags: produto.tags === null ? [] : (Array.isArray(produto.tags) ? produto.tags : []),
+    seo_keywords: produto.seo_keywords === null ? [] : (Array.isArray(produto.seo_keywords) ? produto.seo_keywords : []),
+    related_products: produto.related_products === null ? [] : (Array.isArray(produto.related_products) ? produto.related_products : []),
+    technical_details: produto.technical_details === null ? {} : (typeof produto.technical_details === 'object' ? produto.technical_details : {})
   };
   
   // Verificar os valores após o processamento
-  console.log('challenges depois:', processedProject.challenges);
-  console.log('specifications depois:', processedProject.specifications);
-  console.log('gallery depois:', processedProject.gallery);
+  console.log('challenges depois:', processedProduto.challenges);
+  console.log('specifications depois:', processedProduto.specifications);
+  console.log('gallery depois:', processedProduto.gallery);
   
-  return processedProject;
+  return processedProduto;
 } 

@@ -51,9 +51,9 @@ export default function CsvImportInfo() {
             </svg>
           </button>
           
-          <h3 className="text-lg font-bold mb-3">Importação de Projetos</h3>
+          <h3 className="text-lg font-bold mb-3">Importação de Produtos</h3>
           <p className="text-sm text-gray-600 mb-4">
-            Para adicionar ou editar projetos, faça upload de um arquivo CSV na interface do Supabase.
+            Para adicionar ou editar produtos, faça upload de um arquivo CSV na interface do Supabase.
           </p>
           
           <h4 className="font-semibold text-sm mb-2">Colunas necessárias:</h4>

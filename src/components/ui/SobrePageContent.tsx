@@ -45,7 +45,7 @@ export default function SobrePageContent() {
                   A BV BoaVentura – Implementos Agrícolas, Caldeiraria e Máquinas Especiais é uma empresa recém-construída, mas concebida com uma visão sólida e transformadora: ser muito mais do que uma fornecedora de soluções industriais. Nascemos com o propósito de unir técnica, propósito e pessoas, construindo não apenas máquinas, mas também caminhos de conhecimento e crescimento para quem acredita no poder da prática.
                 </p>
                 <p>
-                  Nossa atuação é voltada para a fabricação de implementos agrícolas personalizados, projetos em caldeiraria sob medida e máquinas especiais adaptadas à necessidade do cliente, com foco inegociável em qualidade, funcionalidade e durabilidade. Entendemos que cada equipamento produzido deve ser uma extensão da força de trabalho do campo e da indústria, e por isso, cada projeto é tratado com atenção ao detalhe, engenharia de valor e compromisso com o resultado.
+                  Nossa atuação é voltada para a fabricação de implementos agrícolas personalizados, produtos em caldeiraria sob medida e máquinas especiais adaptadas à necessidade do cliente, com foco inegociável em qualidade, funcionalidade e durabilidade. Entendemos que cada equipamento produzido deve ser uma extensão da força de trabalho do campo e da indústria, e por isso, cada produto é tratado com atenção ao detalhe, engenharia de valor e compromisso com o resultado.
                 </p>
                 <p>
                   Mas a BV BoaVentura não nasceu apenas para empreender. Ela nasceu para ensinar, inspirar e transformar realidades através da prática, do conhecimento e do exemplo. Acreditamos profundamente que a evolução do nosso setor está diretamente ligada à formação de pessoas: por isso, queremos compartilhar experiências de chão de fábrica, conteúdos técnicos aplicáveis e uma vivência real da rotina industrial, valorizando o saber fazer como motor de desenvolvimento.
@@ -123,7 +123,7 @@ export default function SobrePageContent() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </span>
-                  <span>Qualidade e excelência em todos os projetos</span>
+                  <span>Qualidade e excelência em todos os produtos</span>
                 </li>
                 <li className="flex items-start">
                   <span className="bg-primary w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">

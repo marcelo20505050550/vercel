@@ -37,7 +37,7 @@ export const bannerData: BannerItem[] = [
   },
   {
     id: 2,
-    title: "Projetos Únicos, Resultados Reais",
+    title: "Produtos Únicos, Resultados Reais",
     subtitle: "Máquinas sob medida para sua necessidade.",
     description: "Desenvolvemos soluções técnicas para processos específicos. Alta performance com segurança e personalização.",
     buttonText: "Saíba mais",
@@ -61,16 +61,16 @@ export const sobreBanners: BannerItem[] = [];
 // Banner da página Serviços (removido - agora usando design moderno sem banner)
 export const servicosBanners: BannerItem[] = [];
 
-// Banner da página Projetos
-export const projetosBanners: BannerItem[] = [
+// Banner da página Produtos
+export const produtosBanners: BannerItem[] = [
   {
     id: 1,
-    title: "Projetos de Excelência",
+    title: "Produtos de Excelência",
     subtitle: "Portfólio de soluções em caldeiraria industrial",
-    description: "Conheça os projetos que desenvolvemos com expertise técnica, qualidade e inovação para diversos setores industriais.",
+    description: "Conheça os produtos que desenvolvemos com expertise técnica, qualidade e inovação para diversos setores industriais.",
     buttonText: "",
     buttonLink: "",
-    imageSrc: "/projetos/01.png"
+    imageSrc: "/produtos/01.png"
   },
 ];
 

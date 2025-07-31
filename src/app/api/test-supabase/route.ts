@@ -18,9 +18,9 @@ export async function GET() {
       }, { status: 500 });
     }
     
-    // Buscar uma amostra de projetos
-    const { data: sampleProjects } = await supabase
-      .from('projects')
+    // Buscar uma amostra de produtos
+    const { data: sampleProducts } = await supabase
+      .from('produtos')
       .select('id, slug, title')
       .limit(2);
     

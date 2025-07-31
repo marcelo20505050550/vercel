@@ -124,7 +124,7 @@ const AboutCTA = () => (
 
 export default function AboutSection() {
   const values = [
-    "Qualidade e excelência em todos os projetos",
+    "Qualidade e excelência em todos os produtos",
     "Segurança como prioridade em todas as operações", 
     "Comprometimento com prazos e resultados"
   ];

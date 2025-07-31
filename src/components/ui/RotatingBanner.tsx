@@ -192,11 +192,11 @@ const ModernAnimatedBanner: React.FC = () => {
   const slides: BannerSlide[] = [
     {
       id: 1,
-      title: "Projetos Únicos, Resultados Reais",
+      title: "Produtos Únicos, Resultados Reais",
       subtitle: "Máquinas sob medida para sua necessidade.",
       description: "Desenvolvemos soluções técnicas para processos específicos. Alta performance com segurança e personalização.",
-      buttonText: "Projetos",
-      buttonLink: "/projetos"
+      buttonText: "Produtos",
+      buttonLink: "/produtos"
     },
     {
       id: 2,
