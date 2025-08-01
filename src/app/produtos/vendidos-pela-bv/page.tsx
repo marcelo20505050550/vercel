@@ -14,7 +14,7 @@ export default function VendidosPelaBVPage() {
       <ProdutosCategoryPage 
         category="vendidos-pela-bv"
         title="Produtos de Terceiros Vendidos pela BV Boaventura"
-        description="Produtos de terceiros selecionados e comercializados com nossa garantia de qualidade"
+        description="Produtos de terceiros selecionados e comercializados com nossa qualidade"
       />
     </MainLayout>
   );
