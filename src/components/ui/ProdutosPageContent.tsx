@@ -9,28 +9,32 @@ const categories = [
     title: 'Produtos da BV Boaventura',
     description: 'Produtos desenvolvidos e fabricados com nossa expertise',
     href: '/produtos/produtos-bv-boaventura',
-    color: 'from-yellow-400 to-yellow-600'
+    color: 'from-yellow-400 to-yellow-600',
+    image: '/produtos/categorias/Produtos da BV BoaVentura.png'
   },
   {
     id: 'feitos-na-bv',
     title: 'Produtos de Terceiros Feitos na BV',
     description: 'Produtos de terceiros fabricados com nossa qualidade',
     href: '/produtos/feitos-na-bv',
-    color: 'from-yellow-300 to-yellow-500'
+    color: 'from-yellow-300 to-yellow-500',
+    image: '/produtos/categorias/Produtos de Terceiros Feitos na BV.png'
   },
   {
     id: 'vendidos-pela-bv',
     title: 'Produtos de Terceiros Vendidos pela BV',
     description: 'Produtos selecionados e comercializados por nós',
     href: '/produtos/vendidos-pela-bv',
-    color: 'from-yellow-200 to-yellow-400'
+    color: 'from-yellow-200 to-yellow-400',
+    image: '/produtos/categorias/Produtos de Parceiros Vendidos pela BV.png'
   },
   {
     id: 'servicos-terceiros',
     title: 'Serviços em Produtos de Terceiros',
     description: 'Serviços especializados com nossa expertise técnica',
     href: '/produtos/servicos-terceiros',
-    color: 'from-yellow-500 to-yellow-700'
+    color: 'from-yellow-500 to-yellow-700',
+    image: '/produtos/categorias/Serviços em Produtos de Terceiros.png'
   }
 ];
 
@@ -84,12 +88,12 @@ export default function ProdutosPageContent() {
               >
                 <Link href={category.href}>
                   <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer">
-                    <div className={`h-32 bg-gradient-to-r ${category.color} flex items-center justify-center`}>
-                      <div className="text-white text-center">
-                        <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                          <div className="w-8 h-8 bg-white rounded-full"></div>
-                        </div>
-                      </div>
+                    <div className={`h-32 bg-gradient-to-r ${category.color} flex items-center justify-center relative overflow-hidden`}>
+                      <img
+                        src={category.image}
+                        alt={category.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="p-6">
                       <h3 className="text-lg font-semibold text-text mb-2 group-hover:text-yellow-600 transition-colors">
