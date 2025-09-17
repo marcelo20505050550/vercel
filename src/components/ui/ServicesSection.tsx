@@ -207,6 +207,21 @@ export default function ServicesSection() {
     {
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655-5.653a2.548 2.548 0 010-3.586l.837-.836c.41-.41.947-.628 1.508-.628s1.099.218 1.508.628l.837.836a2.548 2.548 0 010 3.586l-3.586 3.586z" />
+        </svg>
+      ),
+      title: "Ferramentaria",
+      description: "Fabricação de ferramentas especializadas, moldes e dispositivos de precisão para otimizar processos produtivos e garantir qualidade superior nos resultados.",
+      features: [
+        "Ferramentas de corte e conformação",
+        "Moldes e matrizes de precisão",
+        "Dispositivos e gabaritos",
+        "Manutenção de ferramental"
+      ]
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
         </svg>
       ),
@@ -254,7 +269,7 @@ export default function ServicesSection() {
         </motion.div>
 
         {/* Grid de serviços */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16">
           {services.map((service, index) => (
             <ServiceCard
               key={index}

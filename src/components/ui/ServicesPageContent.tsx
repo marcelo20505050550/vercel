@@ -9,7 +9,8 @@ import {
   Settings, 
   CheckCircle2, 
   ArrowRight, 
-  Phone
+  Phone,
+  Hammer
 } from "lucide-react";
 
 export default function ServicesPageContent() {
@@ -55,6 +56,19 @@ export default function ServicesPageContent() {
         "Automação Industrial",
         "Modernização de Equipamentos",
         "Soluções Customizadas"
+      ]
+    },
+    {
+      id: "ferramentaria",
+      icon: <Hammer className="h-8 w-8" />,
+      title: "Ferramentaria",
+      description: "Fabricação de ferramentas especializadas, moldes e dispositivos de precisão para otimizar processos produtivos e garantir qualidade superior nos resultados.",
+      color: "from-yellow-600 to-yellow-800",
+      features: [
+        "Ferramentas de Corte e Conformação",
+        "Moldes e Matrizes de Precisão",
+        "Dispositivos e Gabaritos",
+        "Manutenção de Ferramental"
       ]
     },
     {
@@ -115,7 +129,7 @@ export default function ServicesPageContent() {
             </motion.div>
 
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}

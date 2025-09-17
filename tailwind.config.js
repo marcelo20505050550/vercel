@@ -9,9 +9,9 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#A9A9A9', // Cinza-prata (substituindo o amarelo)
-          light: '#C9C9C9',
-          dark: '#898989',
+          DEFAULT: '#EAB308', // Amarelo principal
+          light: '#FDE047',
+          dark: '#CA8A04',
         },
         secondary: '#333333', // Cinza escuro
         text: {
@@ -22,6 +22,18 @@ module.exports = {
           light: '#F5F5F5',
           DEFAULT: '#CCCCCC', // Cinza para elementos secundários
           dark: '#666666',
+        },
+        yellow: {
+          50: '#FEFCE8',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B',
+          600: '#D97706',
+          700: '#B45309',
+          800: '#92400E',
+          900: '#78350F',
         },
       },
       fontFamily: {
