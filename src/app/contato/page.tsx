@@ -1,8 +1,6 @@
-import Image from 'next/image';
 import MainLayout from '@/components/layout/MainLayout';
 import ContactForm from '@/components/ui/ContactForm';
 import PageHeader from '@/components/ui/PageHeader';
-import SimpleCurriculumUpload from '@/components/ui/SimpleCurriculumUpload';
 
 export default function ContatoPage() {
   return (
@@ -93,23 +91,7 @@ export default function ContatoPage() {
         </div>
       </section>
 
-      {/* Nova seção para envio de currículos */}
-      <section id="curriculos" className="py-16 bg-gray-100">
-        <div className="container-custom">
-          <div className="max-w-2xl mx-auto text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">Trabalhe Conosco</h2>
-            <p className="text-gray-600">
-              Estamos sempre em busca de talentos para fazer parte da nossa equipe. 
-              Envie seu currículo e venha crescer profissionalmente com a BV Boaventura.
-            </p>
-          </div>
-          
-          <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold text-text mb-6">Envie seu currículo</h3>
-            <SimpleCurriculumUpload />
-          </div>
-        </div>
-      </section>
+
     </MainLayout>
   );
 } 
