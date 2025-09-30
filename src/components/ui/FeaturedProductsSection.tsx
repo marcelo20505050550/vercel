@@ -257,15 +257,7 @@ export default function FeaturedProductsSection({
           </motion.div>
         )}
 
-        {/* View All Products Button */}
-        <div className="text-center mt-12">
-          <Link
-            href="/produtos"
-            className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-lg hover:from-yellow-500 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Ver Todas as Categorias
-          </Link>
-        </div>
+
       </div>
     </section>
   );

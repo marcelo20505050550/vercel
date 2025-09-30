@@ -64,7 +64,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link href="/servicos#caldeiraria" className="text-gray-300 hover:text-primary transition-colors">
-                  Caldeiraria
+                  Caldeiraria Leve
                 </Link>
               </li>
               <li>
@@ -75,6 +75,26 @@ const Footer = () => {
               <li>
                 <Link href="/servicos#maquinas" className="text-gray-300 hover:text-primary transition-colors">
                   Máquinas Especiais
+                </Link>
+              </li>
+              <li>
+                <Link href="/servicos#ferramentaria" className="text-gray-300 hover:text-primary transition-colors">
+                  Ferramentaria
+                </Link>
+              </li>
+              <li>
+                <Link href="/servicos#pecas-reposicao" className="text-gray-300 hover:text-primary transition-colors">
+                  Peças de Reposição
+                </Link>
+              </li>
+              <li>
+                <Link href="/servicos#rebarba" className="text-gray-300 hover:text-primary transition-colors">
+                  Rebarba
+                </Link>
+              </li>
+              <li>
+                <Link href="/servicos#cilindros" className="text-gray-300 hover:text-primary transition-colors">
+                  Cilindros
                 </Link>
               </li>
             </ul>

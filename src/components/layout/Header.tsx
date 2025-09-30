@@ -42,6 +42,9 @@ const Header = () => {
             <Link href="/produtos" className="text-text hover:text-primary font-medium transition-colors">
               Produtos
             </Link>
+            <Link href="/parceiros" className="text-text hover:text-primary font-medium transition-colors">
+              Parceiros
+            </Link>
             <Link href="/contato" className="text-text hover:text-primary font-medium transition-colors">
               Contato
             </Link>
@@ -113,6 +116,9 @@ const Header = () => {
               </Link>
               <Link href="/produtos" className="text-text hover:text-primary font-medium transition-colors">
                 Produtos
+              </Link>
+              <Link href="/parceiros" className="text-text hover:text-primary font-medium transition-colors">
+                Parceiros
               </Link>
               <Link href="/contato" className="text-text hover:text-primary font-medium transition-colors">
                 Contato

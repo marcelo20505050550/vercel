@@ -113,7 +113,7 @@ const CTASection = () => (
         Solicite um Orçamento Sem Compromisso!
       </h2>
       <p className="text-yellow-100 text-lg mb-8 max-w-3xl mx-auto">
-        Precisa de um serviço de caldeiraria de qualidade? Entre em contato conosco hoje mesmo e receba um orçamento personalizado para o seu projeto.
+        Precisa de um serviço de qualidade? Entre em contato conosco hoje mesmo e receba um orçamento personalizado para o seu projeto.
       </p>
 
       {/* Grid de benefícios */}
@@ -135,8 +135,8 @@ const CTASection = () => (
       <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 mb-8 max-w-md mx-auto">
         <h3 className="text-xl font-bold text-white mb-4">Horário de Atendimento</h3>
         <div className="space-y-2 text-yellow-100">
-          <p><span className="font-semibold">Segunda a Sexta:</span> 8h às 18h</p>
-          <p><span className="font-semibold">Sábado:</span> 8h às 12h</p>
+          <p><span className="font-semibold">Segunda a Sexta:</span> 7h às 17h</p>
+          <p><span className="font-semibold">Sábado:</span> 7h às 12h</p>
         </div>
       </div>
 
@@ -233,6 +233,37 @@ export default function ServicesSection() {
         "Conjuntos Mecânicos e Hidráulicos",
         "Personalização sob Demanda"
       ]
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
+        </svg>
+      ),
+      title: "Rebarba",
+      description: "Serviços especializados de acabamento e desbaste para remoção de rebarbas, garantindo superfícies lisas e acabamento profissional em peças metálicas.",
+      features: [
+        "Desbaste de soldas e rebarbas",
+        "Acabamento de superfícies metálicas",
+        "Polimento e alisamento",
+        "Preparação para pintura"
+      ]
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      ),
+      title: "Cilindros",
+      description: "Fabricação e manutenção de cilindros hidráulicos e pneumáticos sob medida, oferecendo soluções robustas para sistemas de automação industrial.",
+      features: [
+        "Cilindros hidráulicos customizados",
+        "Cilindros pneumáticos especiais",
+        "Manutenção e recondicionamento",
+        "Sistemas de vedação avançados"
+      ]
     }
   ];
 
@@ -263,13 +294,12 @@ export default function ServicesSection() {
           </h2>
           <div className="w-32 h-1.5 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto mb-6 rounded-full"></div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Soluções completas em caldeiraria, implementos agrícolas e máquinas especiais,
-            desenvolvidas para impulsionar o desempenho do seu negócio.
+            Soluções completas para o seu negócio.
           </p>
         </motion.div>
 
         {/* Grid de serviços */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7 gap-8 mb-16">
           {services.map((service, index) => (
             <ServiceCard
               key={index}

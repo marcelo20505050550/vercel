@@ -1,189 +1,340 @@
-"use client";
+'use client';
 
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
+
+const equipamentos = [
+    {
+        id: 1,
+        nome: 'Compressor Chiaperini',
+        imagem: '/equipamentos/Compressor Chiaperini.jpeg',
+        descricao: 'Compressor de ar industrial para aplicações diversas'
+    },
+    {
+        id: 2,
+        nome: 'Corte Plasma Fortg',
+        imagem: '/equipamentos/Corte Plasma Fortg.jpeg',
+        descricao: 'Equipamento de corte plasma para metais'
+    },
+    {
+        id: 3,
+        nome: 'Empilhadeira Manual Hidráulica',
+        imagem: '/equipamentos/Empilhadeira manual hidráulica.png',
+        descricao: 'Empilhadeira manual para movimentação de cargas'
+    },
+    {
+        id: 4,
+        nome: 'Esmeril Motomil',
+        imagem: '/equipamentos/Esmeril Motomil.jpeg',
+        descricao: 'Esmeril industrial para acabamento e afiação'
+    },
+    {
+        id: 5,
+        nome: 'Fresadora Ferramenteira Clever 4VS',
+        imagem: '/equipamentos/Fresadora.png',
+        descricao: 'Fresadora para usinagem de precisão'
+    },
+    {
+        id: 6,
+        nome: 'Furadeira de Bancada',
+        imagem: '/equipamentos/Furadeira de Bancada.jpeg',
+        descricao: 'Furadeira de bancada para perfurações precisas'
+    },
+    {
+        id: 7,
+        nome: 'Máquina de Solda Balmer',
+        imagem: '/equipamentos/Máquina de Solda Balmer.jpeg',
+        descricao: 'Máquina de solda profissional Balmer'
+    },
+    {
+        id: 8,
+        nome: 'Máquina de Solda MIG MAG',
+        imagem: '/equipamentos/Máquina de solda MIG MAG com cilindro de gás.jpeg',
+        descricao: 'Máquina de solda MIG MAG com cilindro de gás'
+    },
+    {
+        id: 9,
+        nome: 'Morsa de Bancada',
+        imagem: '/equipamentos/Morsa de Bancada.jpeg',
+        descricao: 'Morsa de bancada para fixação de peças'
+    },
+    {
+        id: 10,
+        nome: 'Serra Fita Nagano',
+        imagem: '/equipamentos/Serra Fita Nagano.jpeg',
+        descricao: 'Serra fita industrial Nagano'
+    },
+    {
+        id: 11,
+        nome: 'Torno Mecânico IMOR S-400 II 1500mm',
+        imagem: '/equipamentos/Torno Mecânico.jpeg',
+        descricao: 'Torno mecânico para usinagem'
+    }
+];
+
+const equipe = [
+    {
+        id: 1,
+        nome: 'José Luis Boaventura',
+        profissao: 'Proprietário',
+        imagem: '/equipe/ze.png',
+        descricao: 'Uma frase que o define'
+    },
+    {
+        id: 2,
+        nome: 'Otavio Boaventura',
+        profissao: 'Financeiro/Compras',
+        imagem: '/equipe/otavio.png',
+        descricao: 'Pratique a gratidão: Mesmo em meio ao caos, sempre existe algo pelo qual agradecer. Esse simples hábito muda seu foco e cria resiliência.'
+    },
+    {
+        id: 3,
+        nome: 'Marcelo Silveira Colmanetti',
+        profissao: 'Planejamento/Vendas',
+        imagem: '/equipe/colmanetti.png',
+        descricao: 'Para aprender a ter sucesso, é preciso primeiro aprender a fracassar.'
+    },
+    {
+        id: 4,
+        nome: 'Marcelo Dias Santo',
+        profissao: 'Marketing/T.I.',
+        imagem: '/equipe/dias.png',
+        descricao: 'Deus me trouxe até aqui.'
+    },
+    {
+        id: 5,
+        nome: 'Ederson',
+        profissao: 'Engenharia',
+        imagem: '/equipe/dias.png',
+        descricao: 'Uma frase que o define'
+    },
+    {
+        id: 6,
+        nome: 'Serjo',
+        profissao: 'Produção-Fresador',
+        imagem: '/equipe/dias.png',
+        descricao: 'Uma frase que o define'
+    },
+    {
+        id: 7,
+        nome: 'Eduardo',
+        profissao: 'Produção-Torneiro-mecânico',
+        imagem: '/equipe/dias.png',
+        descricao: 'Uma frase que o define'
+    },
+    {
+        id: 8,
+        nome: 'Matheus',
+        profissao: 'Ajudante geral',
+        imagem: '/equipe/dias.png',
+        descricao: 'Uma frase que o define'
+    },
+    {
+        id: 9,
+        nome: 'Alexandre',
+        profissao: 'Produção',
+        imagem: '/equipe/dias.png',
+        descricao: 'Uma frase que o define'
+    }
+];
 
 export default function SobrePageContent() {
-  return (
-    <>
-      {/* Título Centralizado */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-text mb-4">Nossa História</h1>
-          </div>
+    return (
+        <div className="min-h-screen bg-gray-50">
+
+
+            {/* Nossa História Section */}
+            <section className="py-16">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="max-w-4xl mx-auto"
+                    >
+                        <h2 className="text-3xl md:text-4xl font-bold text-text mb-8 text-center">
+                            Nossa História
+                        </h2>
+
+                        {/* Imagem BV */}
+                        <div className="text-center mb-8">
+                            <Image
+                                src="/image/bv.png"
+                                alt="BV BoaVentura"
+                                width={800}
+                                height={400}
+                                className="w-full h-auto rounded-lg shadow-lg max-w-4xl mx-auto"
+                            />
+                        </div>
+
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                                <p className="mb-6">
+                                    A <strong className="text-text">BV BoaVentura</strong> é uma empresa jovem, mas construída sobre uma base sólida: unir técnica, propósito e pessoas. Não nascemos apenas para fabricar máquinas ou estruturas metálicas. Nosso objetivo é gerar conhecimento, oferecer soluções inteligentes e ser parte do crescimento de quem acredita na força da prática.
+                                </p>
+
+                                <p className="mb-6">
+                                    Nossa atuação abrange a fabricação de implementos agrícolas personalizados, produtos em caldeiraria sob medida e máquinas especiais adaptadas à necessidade do cliente. Hoje também desenvolvemos peças de reposição para colhedoras de cana-de-açúcar, além de serviços em ferramentaria, rebarba e cilindros, sempre com foco inegociável em qualidade, funcionalidade e durabilidade. Cada projeto é tratado com engenharia de valor, atenção ao detalhe e compromisso total com o resultado.
+                                </p>
+
+                                <p className="mb-6">
+                                    Para nós, cada equipamento ou peça que sai da produção não é apenas um produto, mas uma extensão do trabalho de quem está no campo ou na indústria. Por isso, buscamos entregar soluções que representem confiança, eficiência e robustez, atendendo tanto à urgência de manter máquinas em funcionamento quanto à necessidade de inovação no processo produtivo.
+                                </p>
+
+                                <p className="mb-6">
+                                    Mas a BV BoaVentura vai além do fornecimento de soluções industriais. Queremos também formar, inspirar e compartilhar conhecimento. Acreditamos que o crescimento do setor passa pela capacitação de pessoas, pela vivência real de chão de fábrica e pela valorização do saber fazer. Por isso, buscamos contribuir não apenas com resultados, mas também com aprendizado e transformação.
+                                </p>
+
+                                <p className="mb-6">
+                                    Mais do que produtos, entregamos ética, responsabilidade e parceria. Queremos ser reconhecidos não só pelo que fabricamos, mas pelo impacto que deixamos: apoiar quem está começando, colaborar para o fortalecimento do setor e inspirar outras empresas a também acreditar na força coletiva.
+                                </p>
+
+                                <p className="mb-6">
+                                    A meta da BV BoaVentura é clara: ser referência em produto e propósito. Porque cada solda, cada parafuso e cada projeto entregue carrega um compromisso com um futuro mais técnico, mais justo e mais humano.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
+
+
+            {/* Nossos Equipamentos Section */}
+            <section className="py-16 bg-white">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        className="text-center mb-12"
+                    >
+                        <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
+                            Nossos Equipamentos
+                        </h2>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                            Conheça os equipamentos que nos permitem entregar soluções de alta qualidade e precisão
+                        </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {equipamentos.map((equipamento, index) => (
+                            <motion.div
+                                key={equipamento.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.1 * index }}
+                                className="bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                            >
+                                <div className="relative h-48 bg-gradient-to-r from-yellow-100 to-yellow-200">
+                                    <Image
+                                        src={equipamento.imagem}
+                                        alt={equipamento.nome}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="text-lg font-semibold text-text mb-2 group-hover:text-yellow-600 transition-colors">
+                                        {equipamento.nome}
+                                    </h3>
+                                    <p className="text-gray-600 text-sm">
+                                        {equipamento.descricao}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Nossa Equipe Section */}
+            <section className="py-16 bg-gray-50">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        className="text-center mb-12"
+                    >
+                        <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
+                            Nossa Equipe
+                        </h2>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                            Conheça os profissionais que fazem a diferença na BV BoaVentura
+                        </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {equipe.map((membro, index) => (
+                            <motion.div
+                                key={membro.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.1 * index }}
+                                className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group text-center"
+                            >
+                                <div className="relative h-64 bg-gradient-to-r from-yellow-100 to-yellow-200">
+                                    <Image
+                                        src={membro.imagem}
+                                        alt={membro.nome}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                        onError={(e) => {
+                                            // Fallback para quando a imagem não existir
+                                            e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iIzlDQTNBRiIvPgo8cGF0aCBkPSJNNTAgMTYwQzUwIDEzNS4xNDcgNzAuMTQ3IDExNSA5NSAxMTVIMTA1QzEyOS44NTMgMTE1IDE1MCAxMzUuMTQ3IDE1MCAxNjBWMjAwSDUwVjE2MFoiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+';
+                                        }}
+                                    />
+                                </div>
+                                <div className="p-6">
+                                    <h3 className="text-xl font-semibold text-text mb-2 group-hover:text-yellow-600 transition-colors">
+                                        {membro.nome}
+                                    </h3>
+                                    <p className="text-yellow-600 font-medium mb-3">
+                                        {membro.profissao}
+                                    </p>
+                                    <p className="text-gray-600 text-sm">
+                                        {membro.descricao}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Call to Action Section */}
+            <section className="py-16 bg-gradient-to-r from-yellow-400 to-yellow-600">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        className="text-center text-white"
+                    >
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                            Pronto para conhecer nossas soluções?
+                        </h2>
+                        <p className="text-xl mb-8 max-w-2xl mx-auto">
+                            Entre em contato conosco e descubra como podemos ajudar seu negócio a crescer
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a
+                                href="/contatos"
+                                className="bg-white text-yellow-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
+                            >
+                                Entre em Contato
+                            </a>
+                            <a
+                                href="/produtos"
+                                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-yellow-600 transition-colors duration-300"
+                            >
+                                Ver Produtos
+                            </a>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
         </div>
-      </section>
-
-      {/* Nossa História - Redesenhada */}
-      <section id="nossa-historia" className="py-24 bg-white">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl">
-                <Image 
-                  src="/image/1_Solucoes-Inteligentes-para-o-Agro-e-Industria.png" 
-                  alt="BV BoaVentura História" 
-                  width={600} 
-                  height={400}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-              <div className="absolute inset-0 border-2 border-primary rounded-lg -m-4 z-0"></div>
-            </div>
-
-            <div>
-              <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-                
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-text">
-                
-              </h2>
-              <div className="w-20 h-1 bg-primary mb-6"></div>
-              <div className="space-y-4 text-gray-dark">
-                <p>
-                  A BV BoaVentura – Implementos Agrícolas, Caldeiraria e Máquinas Especiais é uma empresa recém-construída, mas concebida com uma visão sólida e transformadora: ser muito mais do que uma fornecedora de soluções industriais. Nascemos com o propósito de unir técnica, propósito e pessoas, construindo não apenas máquinas, mas também caminhos de conhecimento e crescimento para quem acredita no poder da prática.
-                </p>
-                <p>
-                  Nossa atuação é voltada para a fabricação de implementos agrícolas personalizados, produtos em caldeiraria sob medida e máquinas especiais adaptadas à necessidade do cliente, com foco inegociável em qualidade, funcionalidade e durabilidade. Entendemos que cada equipamento produzido deve ser uma extensão da força de trabalho do campo e da indústria, e por isso, cada produto é tratado com atenção ao detalhe, engenharia de valor e compromisso com o resultado.
-                </p>
-                <p>
-                  Mas a BV BoaVentura não nasceu apenas para empreender. Ela nasceu para ensinar, inspirar e transformar realidades através da prática, do conhecimento e do exemplo. Acreditamos profundamente que a evolução do nosso setor está diretamente ligada à formação de pessoas: por isso, queremos compartilhar experiências de chão de fábrica, conteúdos técnicos aplicáveis e uma vivência real da rotina industrial, valorizando o saber fazer como motor de desenvolvimento.
-                </p>
-                <p>
-                  Mais do que produtos, entregamos postura, responsabilidade e ética. Queremos ser uma empresa que representa transformação, que contribui com o crescimento de quem está começando, que forma profissionais preparados para o futuro e que inspira outras empresas a fazerem o mesmo. Acreditamos na força da colaboração e do impacto coletivo. Cada implemento, estrutura ou equipamento que sai da nossa linha de produção leva junto o compromisso de gerar valor e abrir oportunidades.
-                </p>
-                <p>
-                  A meta da BV BoaVentura é ser referência em produto e propósito. Uma marca que as pessoas reconhecem não só pelo que entrega, mas pelo que representa. Porque para nós, cada solda, cada parafuso e cada projeto entregue é um passo em direção a um futuro mais técnico, mais justo e mais humano.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Missão, Visão e Valores */}
-      <section id="missao-visao-valores" className="py-24 bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              Nossos Princípios
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Missão, Visão e Valores</h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-            <p className="text-lg max-w-3xl mx-auto text-gray-dark">
-              Pilares que orientam nossas ações e definem quem somos.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Missão */}
-            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-primary transform hover:-translate-y-2 duration-300">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-text">Missão</h3>
-              <p className="text-gray-dark">
-                Fornecer soluções em caldeiraria e estruturas metálicas com alta qualidade, 
-                eficiência e precisão, contribuindo para o sucesso de nossos clientes e o 
-                desenvolvimento do setor industrial.
-              </p>
-            </div>
-
-            {/* Visão */}
-            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-primary transform hover:-translate-y-2 duration-300">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-text">Visão</h3>
-              <p className="text-gray-dark">
-                Ser reconhecida como empresa referência em caldeiraria industrial, 
-                destacando-se pela excelência técnica, inovação constante e 
-                soluções que transformam positivamente os processos dos nossos clientes.
-              </p>
-            </div>
-
-            {/* Valores */}
-            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-primary transform hover:-translate-y-2 duration-300">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-text">Valores</h3>
-              <ul className="space-y-2 text-gray-dark">
-                <li className="flex items-start">
-                  <span className="bg-primary w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </span>
-                  <span>Qualidade e excelência em todos os produtos</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="bg-primary w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </span>
-                  <span>Comprometimento com prazos e resultados</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="bg-primary w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </span>
-                  <span>Segurança como prioridade em todas as operações</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="bg-primary w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </span>
-                  <span>Ética e transparência nos negócios</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="bg-primary w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </span>
-                  <span>Inovação e melhoria contínua</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Final */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <div className="bg-primary rounded-2xl p-10 text-white text-center relative overflow-hidden">
-            <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
-            
-            <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Vamos Trabalhar Juntos</h2>
-              <p className="text-white/90 text-lg mb-8">
-                Estamos prontos para transformar suas ideias em soluções de alta qualidade. Entre em contato e descubra como podemos ajudar seu negócio a crescer.
-              </p>
-              <Link href="/contato" className="inline-flex items-center px-8 py-4 bg-white text-primary hover:bg-white/90 font-medium rounded-lg transition-colors text-lg">
-                Fale Conosco
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-} 
+    );
+}

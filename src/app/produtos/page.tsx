@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import MainLayout from '@/components/layout/MainLayout';
-import ProdutosPageContent from '@/components/ui/ProdutosPageContent';
 import FeaturedProductsSection from '@/components/ui/FeaturedProductsSection';
 
 export const metadata: Metadata = {
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
 export default function ProdutosPage() {
   return (
     <MainLayout>
-      <ProdutosPageContent />
       <FeaturedProductsSection />
     </MainLayout>
   );

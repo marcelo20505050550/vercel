@@ -29,7 +29,12 @@ export async function getProdutosByCategory(category: string): Promise<Produto[]
         return [];
     }
 
-    return data || [];
+    // Map cover_image to image_url
+    return (data || []).map(produto => ({
+        ...produto,
+        image_url: produto.cover_image,
+        full_description: produto.description
+    }));
 }
 
 export async function getProdutoBySlug(slug: string, category: string): Promise<Produto | null> {
@@ -45,7 +50,14 @@ export async function getProdutoBySlug(slug: string, category: string): Promise<
         return null;
     }
 
-    return data;
+    if (!data) return null;
+
+    // Map cover_image to image_url
+    return {
+        ...data,
+        image_url: data.cover_image,
+        full_description: data.description
+    };
 }
 
 export async function getAllProdutos(): Promise<Produto[]> {
@@ -59,7 +71,12 @@ export async function getAllProdutos(): Promise<Produto[]> {
         return [];
     }
 
-    return data || [];
+    // Map cover_image to image_url
+    return (data || []).map(produto => ({
+        ...produto,
+        image_url: produto.cover_image,
+        full_description: produto.description
+    }));
 }
 
 export async function getRandomProdutos(limit: number = 6): Promise<Produto[]> {
@@ -73,7 +90,13 @@ export async function getRandomProdutos(limit: number = 6): Promise<Produto[]> {
         return [];
     }
 
-    // Embaralhar os resultados
-    const shuffled = (data || []).sort(() => 0.5 - Math.random());
+    // Map cover_image to image_url and shuffle results
+    const mapped = (data || []).map(produto => ({
+        ...produto,
+        image_url: produto.cover_image,
+        full_description: produto.description
+    }));
+    
+    const shuffled = mapped.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, limit);
 }
