@@ -7,67 +7,43 @@ const equipamentos = [
     {
         id: 1,
         nome: 'Compressor Chiaperini',
-        imagem: '/equipamentos/Compressor Chiaperini.jpeg',
+        imagem: '/equipamentos/Compressor Chiaperini.png',
         descricao: 'Compressor de ar industrial para aplicações diversas'
     },
     {
         id: 2,
         nome: 'Corte Plasma Fortg',
-        imagem: '/equipamentos/Corte Plasma Fortg.jpeg',
+        imagem: '/equipamentos/Corte Plasma Fortg.png',
         descricao: 'Equipamento de corte plasma para metais'
     },
     {
         id: 3,
-        nome: 'Empilhadeira Manual Hidráulica',
-        imagem: '/equipamentos/Empilhadeira manual hidráulica.png',
-        descricao: 'Empilhadeira manual para movimentação de cargas'
-    },
-    {
-        id: 4,
-        nome: 'Esmeril Motomil',
-        imagem: '/equipamentos/Esmeril Motomil.jpeg',
-        descricao: 'Esmeril industrial para acabamento e afiação'
-    },
-    {
-        id: 5,
         nome: 'Fresadora Ferramenteira Clever 4VS',
         imagem: '/equipamentos/Fresadora.png',
         descricao: 'Fresadora para usinagem de precisão'
     },
     {
-        id: 6,
+        id: 4,
         nome: 'Furadeira de Bancada',
-        imagem: '/equipamentos/Furadeira de Bancada.jpeg',
+        imagem: '/equipamentos/Furadeira de Bancada.png',
         descricao: 'Furadeira de bancada para perfurações precisas'
     },
     {
-        id: 7,
-        nome: 'Máquina de Solda Balmer',
-        imagem: '/equipamentos/Máquina de Solda Balmer.jpeg',
-        descricao: 'Máquina de solda profissional Balmer'
-    },
-    {
-        id: 8,
+        id: 5,
         nome: 'Máquina de Solda MIG MAG',
-        imagem: '/equipamentos/Máquina de solda MIG MAG com cilindro de gás.jpeg',
+        imagem: '/equipamentos/Máquina de solda MIG MAG com cilindro de gás.png',
         descricao: 'Máquina de solda MIG MAG com cilindro de gás'
     },
     {
-        id: 9,
-        nome: 'Morsa de Bancada',
-        imagem: '/equipamentos/Morsa de Bancada.jpeg',
-        descricao: 'Morsa de bancada para fixação de peças'
-    },
-    {
-        id: 10,
+        id: 6,
         nome: 'Serra Fita Nagano',
-        imagem: '/equipamentos/Serra Fita Nagano.jpeg',
+        imagem: '/equipamentos/Serra Fita Nagano.png',
         descricao: 'Serra fita industrial Nagano'
     },
     {
-        id: 11,
+        id: 7,
         nome: 'Torno Mecânico IMOR S-400 II 1500mm',
-        imagem: '/equipamentos/Torno Mecânico.jpeg',
+        imagem: '/equipamentos/Torno Mecânico.png',
         descricao: 'Torno mecânico para usinagem'
     }
 ];
@@ -78,7 +54,7 @@ const equipe = [
         nome: 'José Luis Boaventura',
         profissao: 'Proprietário',
         imagem: '/equipe/ze.png',
-        descricao: 'Uma frase que o define'
+        descricao: ''
     },
     {
         id: 2,
@@ -103,38 +79,31 @@ const equipe = [
     },
     {
         id: 5,
-        nome: 'Ederson',
+        nome: 'Ederson de Morais Rissatto',
         profissao: 'Engenharia',
-        imagem: '/equipe/dias.png',
-        descricao: 'Uma frase que o define'
-    },
-    {
-        id: 6,
-        nome: 'Serjo',
-        profissao: 'Produção-Fresador',
-        imagem: '/equipe/dias.png',
-        descricao: 'Uma frase que o define'
+        imagem: '/equipe/ederson.png',
+        descricao: ''
     },
     {
         id: 7,
         nome: 'Eduardo',
         profissao: 'Produção-Torneiro-mecânico',
-        imagem: '/equipe/dias.png',
-        descricao: 'Uma frase que o define'
+        imagem: '/equipe/eduardo.png',
+        descricao: ''
     },
     {
         id: 8,
         nome: 'Matheus',
         profissao: 'Ajudante geral',
-        imagem: '/equipe/dias.png',
-        descricao: 'Uma frase que o define'
+        imagem: '/equipe/matheus.png',
+        descricao: ''
     },
     {
         id: 9,
         nome: 'Alexandre',
         profissao: 'Produção',
-        imagem: '/equipe/dias.png',
-        descricao: 'Uma frase que o define'
+        imagem: '/equipe/alexandre.png',
+        descricao: ''
     }
 ];
 
