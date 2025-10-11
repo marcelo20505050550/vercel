@@ -25,7 +25,7 @@ if (!supabaseAnonKey) {
 }
 
 // ============================================
-// CLIENTE SUPABASE PARA USO PÚBLICO
+// CLIENTE SUPABASE PARA USO PÚBLICOo
 // ============================================
 // Usa a chave anônima (anon key) com RLS ativado
 // SEGURO para uso em componentes cliente e Server Components
