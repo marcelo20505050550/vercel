@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 // Log seguro apenas em desenvolvimento
 if (process.env.NODE_ENV === 'development') {
@@ -10,7 +10,15 @@ if (process.env.NODE_ENV === 'development') {
   console.log('[Supabase] API Key:', supabaseKey ? 'Configurada' : 'Não configurada');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// Verificar se as variáveis de ambiente estão configuradas
+if (!supabaseUrl || !supabaseKey) {
+  console.warn('[Supabase] Variáveis de ambiente não configuradas. Cliente não será inicializado.');
+}
+
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseKey || 'placeholder-key'
+);
 
 export type Produto = {
   id: number;

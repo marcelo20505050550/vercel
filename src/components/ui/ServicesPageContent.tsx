@@ -296,7 +296,7 @@ export default function ServicesPageContent() {
               viewport={{ once: true }}
             >
               <CheckCircle2 className="h-4 w-4 mr-2" />
-              Testemunho de Cliente
+              Depoimentos de Clientes
             </motion.div>
 
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
@@ -306,52 +306,96 @@ export default function ServicesPageContent() {
             <div className="w-20 h-1 bg-gradient-to-r from-yellow-300 to-yellow-500 mx-auto mb-6"></div>
           </motion.div>
 
-          <motion.div
-            className="max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <div className="bg-gradient-to-br from-slate-50 to-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 relative">
-              {/* Aspas decorativas */}
-              <div className="absolute -top-4 -left-4 w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
-                </svg>
-              </div>
+          {/* Depoimentos */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* Depoimento 1 - Gualberto */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-gradient-to-br from-slate-50 to-white rounded-3xl p-8 shadow-xl border border-slate-100 relative h-full flex flex-col">
+                {/* Aspas decorativas */}
+                <div className="absolute -top-4 -left-4 w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
+                  </svg>
+                </div>
 
-              <div className="text-center">
-                <blockquote className="text-xl md:text-2xl text-slate-700 font-medium leading-relaxed mb-8 italic">
-                  "A BV BoaVentura superou nossas expectativas na fabricação de implementos agrícolas personalizados.
-                  A qualidade do trabalho, o prazo de entrega e o atendimento foram excepcionais.
-                  Nossos equipamentos estão funcionando perfeitamente,
-                  aumentando significativamente nossa produtividade no campo."
-                </blockquote>
+                <div className="flex-1">
+                  <blockquote className="text-lg text-slate-700 font-medium leading-relaxed mb-6 italic">
+                    "A Bv Boaventura, sempre atendeu as expectativas com os trabalhos. Muito bom a parceria"
+                  </blockquote>
+                </div>
 
-                <div className="flex items-center justify-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mr-4 shadow-lg">
-                    <span className="text-white font-bold text-xl">JS</span>
+                <div className="flex items-center">
+                  <div className="w-14 h-14 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mr-4 shadow-lg">
+                    <span className="text-white font-bold text-lg">GS</span>
                   </div>
                   <div className="text-left">
-                    <h4 className="text-lg font-bold text-slate-900">João Silva</h4>
-                    <p className="text-slate-600">Proprietário Rural - </p>
-                    <div className="flex items-center mt-2">
+                    <h4 className="text-base font-bold text-slate-900">Gualberto Rodrigues da Silva</h4>
+                    <p className="text-slate-600 text-sm">Chefe de Produção - Yamaguchi</p>
+                    <div className="flex items-center mt-1">
                       {[...Array(5)].map((_, i) => (
-                        <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                        <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
                           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                         </svg>
                       ))}
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Elementos decorativos */}
-              <div className="absolute top-8 right-8 w-24 h-24 bg-yellow-200/30 rounded-full blur-xl"></div>
-              <div className="absolute bottom-8 left-8 w-32 h-32 bg-yellow-300/20 rounded-full blur-xl"></div>
-            </div>
-          </motion.div>
+                {/* Elementos decorativos */}
+                <div className="absolute top-8 right-8 w-20 h-20 bg-yellow-200/30 rounded-full blur-xl"></div>
+                <div className="absolute bottom-8 left-8 w-24 h-24 bg-yellow-300/20 rounded-full blur-xl"></div>
+              </div>
+            </motion.div>
+
+            {/* Depoimento 2 - Aline */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-gradient-to-br from-slate-50 to-white rounded-3xl p-8 shadow-xl border border-slate-100 relative h-full flex flex-col">
+                {/* Aspas decorativas */}
+                <div className="absolute -top-4 -left-4 w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
+                  </svg>
+                </div>
+
+                <div className="flex-1">
+                  <blockquote className="text-lg text-slate-700 font-medium leading-relaxed mb-6 italic">
+                    "A entrega da Bv Boaventura foi de qualidade e com compromisso com o prazo"
+                  </blockquote>
+                </div>
+
+                <div className="flex items-center">
+                  <div className="w-14 h-14 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mr-4 shadow-lg">
+                    <span className="text-white font-bold text-lg">AO</span>
+                  </div>
+                  <div className="text-left">
+                    <h4 className="text-base font-bold text-slate-900">Aline Aparecida da Costa de Oliveira</h4>
+                    <p className="text-slate-600 text-sm">Líder de Pintura - Yamaguchi</p>
+                    <div className="flex items-center mt-1">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Elementos decorativos */}
+                <div className="absolute top-8 right-8 w-20 h-20 bg-yellow-200/30 rounded-full blur-xl"></div>
+                <div className="absolute bottom-8 left-8 w-24 h-24 bg-yellow-300/20 rounded-full blur-xl"></div>
+              </div>
+            </motion.div>
+          </div>
 
           {/* Elementos decorativos de fundo */}
           <div className="absolute top-1/4 left-10 w-32 h-32 bg-yellow-200/20 rounded-full blur-2xl"></div>
