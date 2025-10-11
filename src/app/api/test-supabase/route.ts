@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import logger from '@/utils/logger';
 
+// SEGURANÇA: Força Node.js runtime (necessário para variáveis de ambiente na Vercel)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   // PROTEÇÃO: Bloquear em produção ou exigir autenticação
   if (process.env.NODE_ENV === 'production') {

@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import logger from "@/utils/logger";
 
+// SEGURANÇA: Força Node.js runtime (necessário para variáveis de ambiente na Vercel)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Funções para validação
 // Validar email usando regex mais rigorosa e lista de domínios válidos
 function isValidEmail(email: string): boolean {

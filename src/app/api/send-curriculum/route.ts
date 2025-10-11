@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import logger from '@/utils/logger';
 
+// SEGURANÇA: Força Node.js runtime (necessário para variáveis de ambiente na Vercel)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Inicializar o cliente Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
 
