@@ -22,7 +22,7 @@ export function useParceiros() {
 
             setParceiros(prev => [...prev, parceiroCompleto]);
 
-            // Aqui você faria a chamada para a API para salvar no backend
+            // Aqui voocêe faria a chamada para a API para salvar no backend
             // await api.post('/parceiros', parceiroCompleto);
 
             return parceiroCompleto;
