@@ -76,34 +76,6 @@ const equipe = [
         profissao: 'Marketing/T.I.',
         imagem: '/equipe/dias.png',
         descricao: 'Deus me trouxe até aqui.'
-    },
-    {
-        id: 5,
-        nome: 'Ederson de Morais Rissatto',
-        profissao: 'Engenharia',
-        imagem: '/equipe/ederson.png',
-        descricao: ''
-    },
-    {
-        id: 7,
-        nome: 'Eduardo',
-        profissao: 'Produção-Torneiro-mecânico',
-        imagem: '/equipe/eduardo.png',
-        descricao: ''
-    },
-    {
-        id: 8,
-        nome: 'Matheus',
-        profissao: 'Ajudante geral',
-        imagem: '/equipe/matheus.png',
-        descricao: ''
-    },
-    {
-        id: 9,
-        nome: 'Alexandre',
-        profissao: 'Produção',
-        imagem: '/equipe/alexandre.png',
-        descricao: ''
     }
 ];
 
