@@ -14,17 +14,21 @@ export interface ContactFormData {
  * @returns Promise com o resultado do envio
  */
 export async function sendContactEmail(formData: ContactFormData): Promise<{ success: boolean; message: string }> {
+  // Criar controller para timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+  
   try {
-    // Agora usamos a API real
-    console.log('Enviando email via API:', formData);
-    
     const response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
 
     const result = await response.json();
     
@@ -40,7 +44,16 @@ export async function sendContactEmail(formData: ContactFormData): Promise<{ suc
         message: result.error || 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.'
       };
     }
-  } catch (error) {
+  } catch (error: any) {
+    clearTimeout(timeoutId);
+    
+    if (error.name === 'AbortError') {
+      return {
+        success: false,
+        message: 'Tempo de requisição excedido. Por favor, tente novamente.'
+      };
+    }
+    
     console.error('Erro ao enviar email:', error);
     return {
       success: false,

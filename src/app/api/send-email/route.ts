@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import logger from "@/utils/logger";
 
 // Funções para validação
 // Validar email usando regex mais rigorosa e lista de domínios válidos
@@ -69,8 +70,8 @@ if (!resendApiKey) {
 
 const resend = new Resend(resendApiKey);
 
-// Email verificado para receber todas as mensagens
-const verifiedEmail = "marcelodiassanto@gmail.com";
+// Email verificado para receber todas as mensagens (agora via variável de ambiente)
+const verifiedEmail = process.env.CONTACT_EMAIL || "bvcaldeiraria@gmail.com";
 
 // Dados da empresa para incluir no email
 const COMPANY_DATA = {
@@ -84,10 +85,10 @@ const COMPANY_DATA = {
 
 export async function POST(request: NextRequest) {
   try {
-    // Log para depuração da API
-    console.log("API send-email chamada com sucesso");
-    console.log("Ambiente:", process.env.NODE_ENV);
-    console.log("Resend API Key configurada:", !!resendApiKey);
+    // Log seguro para depuração da API
+    logger.info("API send-email chamada");
+    logger.debug("Ambiente", process.env.NODE_ENV);
+    logger.debug("Resend API Key configurada", !!resendApiKey);
 
     const { name, email, phone, subject, message } = await request.json();
 
@@ -101,7 +102,7 @@ export async function POST(request: NextRequest) {
 
     // Validação específica para email
     if (!isValidEmail(email)) {
-      console.log("Email inválido rejeitado:", email);
+      logger.warn("Email inválido rejeitado", email);
       return NextResponse.json(
         { error: "O email fornecido não é válido ou parece ser um email temporário/fictício" },
         { status: 400 }
@@ -110,14 +111,14 @@ export async function POST(request: NextRequest) {
 
     // Validação específica para telefone
     if (!isValidPhone(phone)) {
-      console.log("Telefone inválido rejeitado:", phone);
+      logger.warn("Telefone inválido rejeitado", phone);
       return NextResponse.json(
         { error: "O telefone fornecido não é válido. Use o formato (00) 00000-0000" },
         { status: 400 }
       );
     }
     
-    console.log("Enviando email para:", verifiedEmail);
+    logger.sensitive("Enviando email para", verifiedEmail);
 
     // HTML mais elaborado com dados da empresa
     const htmlContent = `
@@ -169,7 +170,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (error) {
-        console.error("Erro do Resend:", error);
+        logger.error("Erro do Resend", error);
         return NextResponse.json(
           { 
             error: "Erro ao enviar mensagem", 
@@ -179,7 +180,7 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      console.log('Email enviado com sucesso para:', verifiedEmail);
+      logger.success('Email enviado com sucesso');
 
       return NextResponse.json({ 
         success: true, 
@@ -187,7 +188,7 @@ export async function POST(request: NextRequest) {
         data 
       });
     } catch (sendError: any) {
-      console.error("Erro ao enviar email via Resend:", sendError);
+      logger.error("Erro ao enviar email via Resend", sendError);
       return NextResponse.json(
         { 
           error: "Erro ao enviar email via serviço", 
@@ -197,7 +198,7 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error: any) {
-    console.error("Erro no servidor:", error);
+    logger.error("Erro no servidor", error);
     return NextResponse.json(
       { 
         error: "Erro interno do servidor", 

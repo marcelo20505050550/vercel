@@ -3,9 +3,12 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-console.log('Inicializando cliente Supabase:');
-console.log('URL:', supabaseUrl ? 'Configurada' : 'Não configurada');
-console.log('API Key:', supabaseKey ? 'Configurada' : 'Não configurada');
+// Log seguro apenas em desenvolvimento
+if (process.env.NODE_ENV === 'development') {
+  console.log('[Supabase] Inicializando cliente');
+  console.log('[Supabase] URL:', supabaseUrl ? 'Configurada' : 'Não configurada');
+  console.log('[Supabase] API Key:', supabaseKey ? 'Configurada' : 'Não configurada');
+}
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -56,12 +59,6 @@ export type Produto = {
  */
 export function processProduto(produto: any): Produto {
   if (!produto) return produto;
-
-  // Verificar os valores antes do processamento
-  console.log(`Processando produto ${produto.id} (${produto.slug})`);
-  console.log('challenges antes:', produto.challenges);
-  console.log('specifications antes:', produto.specifications);
-  console.log('gallery antes:', produto.gallery);
   
   // Criar um novo objeto com arrays vazios em vez de null
   const processedProduto = {
@@ -75,11 +72,6 @@ export function processProduto(produto: any): Produto {
     related_products: produto.related_products === null ? [] : (Array.isArray(produto.related_products) ? produto.related_products : []),
     technical_details: produto.technical_details === null ? {} : (typeof produto.technical_details === 'object' ? produto.technical_details : {})
   };
-  
-  // Verificar os valores após o processamento
-  console.log('challenges depois:', processedProduto.challenges);
-  console.log('specifications depois:', processedProduto.specifications);
-  console.log('gallery depois:', processedProduto.gallery);
   
   return processedProduto;
 } 

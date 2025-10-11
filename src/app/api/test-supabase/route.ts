@@ -1,8 +1,23 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import logger from '@/utils/logger';
 
-export async function GET() {
-  console.log('Testando conexão com Supabase...');
+export async function GET(request: NextRequest) {
+  // PROTEÇÃO: Bloquear em produção ou exigir autenticação
+  if (process.env.NODE_ENV === 'production') {
+    const authHeader = request.headers.get('authorization');
+    const adminSecret = process.env.ADMIN_SECRET;
+    
+    if (!adminSecret || authHeader !== `Bearer ${adminSecret}`) {
+      logger.warn('Tentativa de acesso não autorizado ao endpoint de debug');
+      return NextResponse.json(
+        { error: 'Não autorizado' },
+        { status: 401 }
+      );
+    }
+  }
+  
+  logger.info('Testando conexão com Supabase');
   
   try {
     // Testar conexão com o Supabase
@@ -11,7 +26,7 @@ export async function GET() {
       .select('*', { count: 'exact', head: true });
       
     if (error) {
-      console.error('Erro ao conectar com Supabase:', error);
+      logger.error('Erro ao conectar com Supabase', error);
       return NextResponse.json({ 
         success: false, 
         error: error.message 
@@ -33,7 +48,7 @@ export async function GET() {
     });
     
   } catch (err) {
-    console.error('Erro ao testar conexão com Supabase:', err);
+    logger.error('Erro ao testar conexão com Supabase', err);
     return NextResponse.json({ 
       success: false, 
       error: err instanceof Error ? err.message : 'Erro desconhecido',

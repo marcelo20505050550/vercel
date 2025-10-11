@@ -11,6 +11,10 @@ dist/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.example
+
+# Ignora arquivo de configuração Vercel com secrets
+vercel.json
 
 # Ignora arquivos do sistema
 .DS_Store

@@ -1,8 +1,23 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import logger from '@/utils/logger';
 
-export async function GET() {
-  console.log('Executando script para corrigir arrays nulos...');
+export async function GET(request: NextRequest) {
+  // PROTEÇÃO: Bloquear em produção ou exigir autenticação
+  if (process.env.NODE_ENV === 'production') {
+    const authHeader = request.headers.get('authorization');
+    const adminSecret = process.env.ADMIN_SECRET;
+    
+    if (!adminSecret || authHeader !== `Bearer ${adminSecret}`) {
+      logger.warn('Tentativa de acesso não autorizado ao endpoint de manutenção');
+      return NextResponse.json(
+        { error: 'Não autorizado' },
+        { status: 401 }
+      );
+    }
+  }
+  
+  logger.info('Executando script para corrigir arrays nulos');
   
   try {
     // Buscar todos os produtos
@@ -11,27 +26,25 @@ export async function GET() {
       .select('*');
       
     if (error) {
-      console.error('Erro ao buscar produtos:', error);
+      logger.error('Erro ao buscar produtos', error);
       return NextResponse.json({ 
         success: false, 
         error: error.message 
       }, { status: 500 });
     }
     
-    console.log(`Encontrados ${data?.length || 0} produtos`);
+    logger.info(`Encontrados ${data?.length || 0} produtos`);
     
     // Array para armazenar resultados
     const results = [];
     
     // Processar cada produto
     for (const produto of data || []) {
-      console.log(`Processando produto ${produto.id} (${produto.slug})`);
-      console.log('gallery antes:', produto.gallery);
-      console.log('seo_keywords antes:', produto.seo_keywords);
+      logger.debug(`Processando produto ${produto.id}`, produto.slug);
       
       // Verificar se algum campo de array é null
       if (produto.gallery === null || produto.seo_keywords === null) {
-        console.log(`Atualizando produto com ID ${produto.id}, slug: ${produto.slug}`);
+        logger.info(`Atualizando produto ${produto.id}`, produto.slug);
         
         // Criar objeto com os campos a serem atualizados
         const updates = {
@@ -46,7 +59,7 @@ export async function GET() {
           .eq('id', produto.id);
           
         if (updateError) {
-          console.error(`Erro ao atualizar produto ${produto.id}:`, updateError);
+          logger.error(`Erro ao atualizar produto ${produto.id}`, updateError);
           results.push({
             id: produto.id,
             slug: produto.slug,
@@ -54,7 +67,7 @@ export async function GET() {
             error: updateError.message
           });
         } else {
-          console.log(`Produto ${produto.id} atualizado com sucesso`);
+          logger.success(`Produto ${produto.id} atualizado`);
           results.push({
             id: produto.id,
             slug: produto.slug,
@@ -62,7 +75,7 @@ export async function GET() {
           });
         }
       } else {
-        console.log(`Produto ${produto.id} não precisa de atualização`);
+        logger.debug(`Produto ${produto.id} já está correto`);
         results.push({
           id: produto.id,
           slug: produto.slug,
@@ -72,7 +85,8 @@ export async function GET() {
       }
     }
     
-    console.log(`Resultado final: ${results.filter(r => r.success && !r.noUpdateNeeded).length} produtos atualizados com sucesso`);
+    const updatedCount = results.filter(r => r.success && !r.noUpdateNeeded).length;
+    logger.success(`${updatedCount} produtos atualizados com sucesso`);
     
     return NextResponse.json({ 
       success: true, 
@@ -80,10 +94,10 @@ export async function GET() {
     });
     
   } catch (err) {
-    console.error('Erro ao executar script:', err);
+    logger.error('Erro ao executar script', err);
     return NextResponse.json({ 
       success: false, 
       error: err instanceof Error ? err.message : 'Erro desconhecido' 
     }, { status: 500 });
   }
-} 
+}

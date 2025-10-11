@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import logger from '@/utils/logger';
 
 export interface Produto {
     id: string;
@@ -25,7 +26,7 @@ export async function getProdutosByCategory(category: string): Promise<Produto[]
         .order('created_at', { ascending: false });
 
     if (error) {
-        console.error('Erro ao buscar produtos:', error);
+        logger.error('Erro ao buscar produtos por categoria', error);
         return [];
     }
 
@@ -46,7 +47,7 @@ export async function getProdutoBySlug(slug: string, category: string): Promise<
         .single();
 
     if (error) {
-        console.error('Erro ao buscar produto:', error);
+        logger.error('Erro ao buscar produto por slug', error);
         return null;
     }
 
@@ -67,7 +68,7 @@ export async function getAllProdutos(): Promise<Produto[]> {
         .order('created_at', { ascending: false });
 
     if (error) {
-        console.error('Erro ao buscar todos os produtos:', error);
+        logger.error('Erro ao buscar todos os produtos', error);
         return [];
     }
 
@@ -86,7 +87,7 @@ export async function getRandomProdutos(limit: number = 6): Promise<Produto[]> {
         .limit(limit);
 
     if (error) {
-        console.error('Erro ao buscar produtos aleatórios:', error);
+        logger.error('Erro ao buscar produtos aleatórios', error);
         return [];
     }
 
