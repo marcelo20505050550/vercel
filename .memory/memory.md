@@ -430,3 +430,44 @@ return (
 - ✅ Next.js gerencia o `<head>` automaticamente
 
 **Arquivo corrigido:** `src/app/layout.tsx` (linha 99-102)
+
+---
+
+## 2025-10-14 - CORREÇÃO: Site Offline - Redirects Prematuros
+
+### Problema Identificado:
+- ❌ **Site continuou offline** após correção do `<head>`
+- ❌ **Build completando com sucesso** mas site inacessível
+- ❌ **Causa raiz**: Redirects no `next.config.js` configurados ANTES do domínio customizado
+
+### Explicação:
+Os redirects de `.vercel.app` → `bvboaventura.com.br` só funcionam DEPOIS que o domínio customizado está configurado e ativo na Vercel. Aplicar os redirects antes causa:
+- Loop de redirecionamento
+- Site inacessível no domínio .vercel.app
+- Erro 404 ou timeout
+
+### Solução Implementada:
+- ✅ **Redirects comentados temporariamente** no `next.config.js`
+- ✅ **Site volta a funcionar** no domínio .vercel.app
+- ✅ **Comentário adicionado** explicando quando habilitar
+
+### Ordem Correta de Configuração:
+
+**1. PRIMEIRO - Configurar Domínio na Vercel:**
+   - Dashboard Vercel → Project Settings → Domains
+   - Adicionar: `bvboaventura.com.br` e `www.bvboaventura.com.br`
+   - Aguardar DNS propagar e SSL provisionar
+   - Verificar que o site carrega em ambos os domínios
+
+**2. DEPOIS - Habilitar Redirects:**
+   - Descomentar os redirects no `next.config.js`
+   - Fazer deploy novamente
+   - Agora os redirects funcionarão corretamente
+
+### Regra Crítica:
+**Redirects de domínio só funcionam APÓS o domínio customizado estar ativo!**
+- ❌ Não adicione redirects antes de configurar o domínio
+- ✅ Configure o domínio primeiro
+- ✅ Depois habilite os redirects
+
+**Arquivo corrigido:** `next.config.js` (linhas 5-32 comentadas)
