@@ -96,10 +96,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <head>
-        <JsonLd />
-      </head>
       <body className={`${inter.className} min-h-screen bg-gray-light`}>
+        <JsonLd />
         {children}
         <ScrollToTopButton />
       </body>

@@ -379,3 +379,54 @@ A galeria de imagens/vídeos já está implementada e funcional:
 - ✅ PWA com manifest
 - ✅ Redirects 301 para evitar conteúdo duplicado
 - ✅ Mobile-friendly e responsivo
+
+---
+
+## 2025-10-14 - CORREÇÃO CRÍTICA: Site Offline após Deploy
+
+### Problema Identificado:
+- ❌ **Site ficou offline** após deploy na Vercel
+- ❌ **Build completou com sucesso** mas o site não carregava
+- ❌ **Causa raiz**: Tag `<head>` manual no `layout.tsx` (proibida no Next.js App Router)
+
+### Explicação:
+No **Next.js 13+ (App Router)**, o framework gerencia automaticamente o `<head>` através da API de Metadata. Adicionar uma tag `<head>` manualmente causa erro de hidratação e quebra o site.
+
+**Código problemático:**
+```tsx
+return (
+  <html lang="pt-BR">
+    <head>  {/* ❌ PROIBIDO no App Router */}
+      <JsonLd />
+    </head>
+    <body>...</body>
+  </html>
+);
+```
+
+### Solução Implementada:
+- ✅ **Removida tag `<head>` manual**
+- ✅ **JSON-LD movido para dentro do `<body>`** (ainda funciona perfeitamente)
+- ✅ Scripts JSON-LD podem estar em qualquer lugar do HTML
+
+**Código corrigido:**
+```tsx
+return (
+  <html lang="pt-BR">
+    <body className={...}>
+      <JsonLd />  {/* ✅ Dentro do body */}
+      {children}
+      <ScrollToTopButton />
+    </body>
+  </html>
+);
+```
+
+### Regra Crítica - Next.js App Router:
+**NUNCA adicione tags `<head>`, `<html>`, `<body>` manualmente no layout:**
+- ❌ `<head>` manual é proibido
+- ✅ Use `export const metadata` para meta tags
+- ✅ Scripts podem ir no `<body>` sem problemas
+- ✅ Next.js gerencia o `<head>` automaticamente
+
+**Arquivo corrigido:** `src/app/layout.tsx` (linha 99-102)
