@@ -39,7 +39,7 @@ interface FeaturedProductsSectionProps {
 export default function FeaturedProductsSection({ 
   showFilters = true, 
   title = "Produtos em Destaque",
-  description = "Explore nossa linha completa de produtos industriais e implementos agrícolas"
+  description = "Explore nossa linha completa de produtos industriais e máquinas especiais"
 }: FeaturedProductsSectionProps) {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [filteredProdutos, setFilteredProdutos] = useState<Produto[]>([]);

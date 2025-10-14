@@ -1,0 +1,25 @@
+{
+  "name": "BV BoaVentura - Soluções Industriais",
+  "short_name": "BV BoaVentura",
+  "description": "Empresa especializada em caldeiraria, implementos agrícolas e máquinas especiais",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a8a",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/image/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/image/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

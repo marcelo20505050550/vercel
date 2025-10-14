@@ -5,7 +5,7 @@ import ProdutosCategoryPage from '@/components/ui/ProdutosCategoryPage';
 export const metadata: Metadata = {
   title: 'Produtos da BV Boaventura | BV Boaventura',
   description: 'Conheça os produtos desenvolvidos e fabricados pela BV Boaventura com qualidade e inovação.',
-  keywords: ['produtos BV Boaventura', 'caldeiraria', 'implementos agrícolas', 'máquinas especiais'],
+  keywords: ['produtos BV Boaventura', 'caldeiraria', 'máquinas especiais'],
 };
 
 export default function ProdutosBVPage() {

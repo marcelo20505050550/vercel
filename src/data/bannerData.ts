@@ -28,15 +28,6 @@ interface BannerItem {
 export const bannerData: BannerItem[] = [
   {
     id: 1,
-    title: "Eficiência no Campo Começa Aqui",
-    subtitle: "Implementos resistentes, pensados para o produtor.",
-    description: "Grades, roçadeiras e guinchos com desempenho superior. Equipamentos robustos para aumentar sua produção.",
-    buttonText: "Saíba mais",
-    buttonLink: "/servicos",
-    imageSrc: "/banners/inicio/implementos_agrícolas.png"
-  },
-  {
-    id: 2,
     title: "Produtos Únicos, Resultados Reais",
     subtitle: "Máquinas sob medida para sua necessidade.",
     description: "Desenvolvemos soluções técnicas para processos específicos. Alta performance com segurança e personalização.",
@@ -45,7 +36,7 @@ export const bannerData: BannerItem[] = [
     imageSrc: "/banners/inicio/maquinas_especiais.png"
   },
   {
-    id: 3,
+    id: 2,
     title: "Soluções Integradas para Indústria",
     subtitle: "Tecnologia e precisão em cada detalhe",
     description: "Oferecemos soluções completas que unem tecnologia avançada e expertise técnica para atender às necessidades específicas do seu negócio.",
@@ -80,7 +71,7 @@ export const contatoBanners: BannerItem[] = [
     id: 1,
     title: "Fale com a BV BoaVentura",
     subtitle: "Estamos à disposição para atender você",
-    description: "Entre em contato conosco e conheça nossas soluções em caldeiraria industrial, implementos agrícolas e máquinas especiais.",
+    description: "Entre em contato conosco e conheça nossas soluções em caldeiraria industrial e máquinas especiais.",
     buttonText: "",
     buttonLink: "",
     imageSrc: "/contatos/01.png"

@@ -1,6 +1,18 @@
+import { Metadata } from 'next';
 import MainLayout from '@/components/layout/MainLayout';
 import ContactForm from '@/components/ui/ContactForm';
 import PageHeader from '@/components/ui/PageHeader';
+
+export const metadata: Metadata = {
+  title: 'Contato - BV BoaVentura',
+  description: 'Entre em contato com a BV BoaVentura. Estamos em São Joaquim da Barra, SP. WhatsApp: (16) 99162-4446 | Email: bvcaldeiraria@gmail.com',
+  keywords: ['contato BV BoaVentura', 'orçamento caldeiraria', 'telefone', 'email', 'whatsapp'],
+  openGraph: {
+    title: 'Contato - BV BoaVentura',
+    description: 'Entre em contato conosco para solicitar orçamentos e informações sobre nossos serviços.',
+    url: 'https://bvboaventura.com.br/contato',
+  },
+};
 
 export default function ContatoPage() {
   return (

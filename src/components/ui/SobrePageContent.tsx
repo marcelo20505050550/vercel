@@ -115,7 +115,7 @@ export default function SobrePageContent() {
                                 </p>
 
                                 <p className="mb-6">
-                                    Nossa atuação abrange a fabricação de implementos agrícolas personalizados, produtos em caldeiraria sob medida e máquinas especiais adaptadas à necessidade do cliente. Hoje também desenvolvemos peças de reposição para colhedoras de cana-de-açúcar, além de serviços em ferramentaria, rebarba e cilindros, sempre com foco inegociável em qualidade, funcionalidade e durabilidade. Cada projeto é tratado com engenharia de valor, atenção ao detalhe e compromisso total com o resultado.
+                                    Nossa atuação abrange a fabricação de produtos em caldeiraria sob medida e máquinas especiais adaptadas à necessidade do cliente. Hoje também desenvolvemos peças de reposição para colhedoras de cana-de-açúcar, além de serviços em ferramentaria, rebarbação e cilindros, sempre com foco inegociável em qualidade, funcionalidade e durabilidade. Cada projeto é tratado com engenharia de valor, atenção ao detalhe e compromisso total com o resultado.
                                 </p>
 
                                 <p className="mb-6">

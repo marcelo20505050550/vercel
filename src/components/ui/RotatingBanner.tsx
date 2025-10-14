@@ -205,14 +205,6 @@ const ModernAnimatedBanner: React.FC = () => {
       description: "Oferecemos soluções completas que unem tecnologia avançada e expertise técnica para atender às necessidades específicas do seu negócio.",
       buttonText: "Serviços",
       buttonLink: "/servicos"
-    },
-    {
-      id: 3,
-      title: "Eficiência no Campo Começa Aqui",
-      subtitle: "Implementos resistentes, pensados para o produtor.",
-      description: "Grades, roçadeiras e guinchos com desempenho superior. Equipamentos robustos para aumentar sua produção.",
-      buttonText: "Fale Conosco",
-      buttonLink: "/contato"
     }
   ];
 

@@ -1,5 +1,35 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // SEO: Configurações de domínio e redirects
+  async redirects() {
+    return [
+      // Redireciona www para domínio principal
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.bvboaventura.com.br',
+          },
+        ],
+        destination: 'https://bvboaventura.com.br/:path*',
+        permanent: true,
+      },
+      // Redireciona domínio Vercel para domínio principal
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: '(.*)vercel.app',
+          },
+        ],
+        destination: 'https://bvboaventura.com.br/:path*',
+        permanent: true,
+      },
+    ];
+  },
+
   // Configurações de imagem para Next.js 15
   images: {
     // Usando sharp como padrão no Next.js 15 (squoosh foi removido)

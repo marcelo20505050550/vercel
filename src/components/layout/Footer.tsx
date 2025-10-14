@@ -21,7 +21,7 @@ const Footer = () => {
                 className="h-12 w-auto mb-4"
               />
               <p className="text-gray-300 mt-4">
-                Soluções completas em caldeiraria, implementos agrícolas e máquinas especiais.
+                Soluções completas em caldeiraria e máquinas especiais.
               </p>
             </div>
           </div>
@@ -68,11 +68,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/servicos#implementos" className="text-gray-300 hover:text-primary transition-colors">
-                  Implementos Agrícolas
-                </Link>
-              </li>
-              <li>
                 <Link href="/servicos#maquinas" className="text-gray-300 hover:text-primary transition-colors">
                   Máquinas Especiais
                 </Link>
@@ -88,8 +83,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/servicos#rebarba" className="text-gray-300 hover:text-primary transition-colors">
-                  Rebarba
+                <Link href="/servicos#rebarbacao" className="text-gray-300 hover:text-primary transition-colors">
+                  Rebarbação
                 </Link>
               </li>
               <li>
