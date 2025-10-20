@@ -55,70 +55,68 @@ const nextConfig = {
     ],
   },
   
-  // SEGURANÇA: Headers de segurança para todas as páginas
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-eval necessário para Next.js
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https: blob:",
-              "font-src 'self' data:",
-              "connect-src 'self' https://*.supabase.co https://api.resend.com",
-              "frame-ancestors 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-            ].join('; ')
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains'
-          }
-        ],
-      },
-    ];
-  },
+  // TEMPORÁRIO: Headers de segurança desabilitados para debug do deploy
+  // TODO: Reabilitar após confirmar que o deploy funciona
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/:path*',
+  //       headers: [
+  //         {
+  //           key: 'Content-Security-Policy',
+  //           value: [
+  //             "default-src 'self'",
+  //             "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  //             "style-src 'self' 'unsafe-inline'",
+  //             "img-src 'self' data: https: blob:",
+  //             "font-src 'self' data:",
+  //             "connect-src 'self' https://*.supabase.co https://api.resend.com",
+  //             "frame-ancestors 'none'",
+  //             "base-uri 'self'",
+  //             "form-action 'self'",
+  //           ].join('; ')
+  //         },
+  //         {
+  //           key: 'X-Frame-Options',
+  //           value: 'DENY'
+  //         },
+  //         {
+  //           key: 'X-Content-Type-Options',
+  //           value: 'nosniff'
+  //         },
+  //         {
+  //           key: 'X-XSS-Protection',
+  //           value: '1; mode=block'
+  //         },
+  //         {
+  //           key: 'Referrer-Policy',
+  //           value: 'strict-origin-when-cross-origin'
+  //         },
+  //         {
+  //           key: 'Permissions-Policy',
+  //           value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+  //         },
+  //         {
+  //           key: 'Strict-Transport-Security',
+  //           value: 'max-age=31536000; includeSubDomains'
+  //         }
+  //       ],
+  //     },
+  //   ];
+  // },
   
-  // Configurações de bundle para melhor performance
-  experimental: {
-    // Configurações experimentais removidas/modificadas no Next.js 15
-    optimizePackageImports: ['lucide-react'],
-  },
+  // Configurações simplificadas para debug
+  // experimental: {
+  //   optimizePackageImports: ['lucide-react'],
+  // },
   
-  // Configurações de transpilação de pacotes externos
-  transpilePackages: ['framer-motion'],
+  // transpilePackages: ['framer-motion'],
   
-  // Configurações de logging para desenvolvimento
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
+  // logging: {
+  //   fetches: {
+  //     fullUrl: true,
+  //   },
+  // },
   
   // Configurações de build
   eslint: {
