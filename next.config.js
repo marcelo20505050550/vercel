@@ -105,18 +105,16 @@ const nextConfig = {
   //   ];
   // },
   
-  // Configurações simplificadas para debug
-  // experimental: {
-  //   optimizePackageImports: ['lucide-react'],
-  // },
+  // Otimizações para deploy na Vercel
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
   
-  // transpilePackages: ['framer-motion'],
+  // Reduce bundle size
+  swcMinify: true,
   
-  // logging: {
-  //   fetches: {
-  //     fullUrl: true,
-  //   },
-  // },
+  // Optimize output
+  output: 'standalone',
   
   // Configurações de build
   eslint: {

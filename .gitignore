@@ -13,8 +13,8 @@ dist/
 .env.production.local
 .env.example
 
-# Ignora arquivo de configuração Vercel com secrets
-vercel.json
+# vercel.json agora está versionado (sem secrets)
+# Usar variáveis de ambiente na Vercel para secrets
 
 # Ignora arquivos do sistema
 .DS_Store
