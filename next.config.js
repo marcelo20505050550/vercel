@@ -110,12 +110,6 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
   
-  // Reduce bundle size
-  swcMinify: true,
-  
-  // Optimize output
-  output: 'standalone',
-  
   // Configurações de build
   eslint: {
     ignoreDuringBuilds: false,
