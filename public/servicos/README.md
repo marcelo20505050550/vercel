@@ -14,7 +14,7 @@ Para adicionar imagens e vídeos à galeria de cada serviço:
 const MEDIA_CONFIG = {
   caldeiraria: [
     { type: 'image', src: '/servicos/caldeiraria/bv.png' },
-    { type: 'image', src: '/servicos/caldeiraria/sua-nova-imagem.jpg' } // ← Adicione aqui
+    { type: 'image', src: '/servicos/caldeiraria/rebarbacao-1.jpeg' } // ← Adicione aqui
   ],
   // ...
 };

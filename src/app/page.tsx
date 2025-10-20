@@ -6,6 +6,7 @@ import ServicesSection from '@/components/ui/ServicesSection';
 import AboutSection from '@/components/ui/AboutSection';
 import ModernAnimatedBanner from '@/components/ui/RotatingBanner';
 import HomeFeaturedProducts from '@/components/ui/HomeFeaturedProducts';
+import TestimonialsSection from '@/components/ui/TestimonialsSection';
 
 export const metadata: Metadata = {
   title: 'BV BoaVentura - Caldeiraria e Implementos Agrícolas',
@@ -32,6 +33,9 @@ export default function Home() {
 
       {/* Sobre Section - Moderno */}
       <AboutSection />
+
+      {/* Seção de Depoimentos */}
+      <TestimonialsSection />
 
       {/* Serviços Section */}
       <ServicesSection />
