@@ -14,15 +14,19 @@ interface RateLimitRecord {
 // Para produção com múltiplas instâncias, use Redis ou similar
 const requestCounts = new Map<string, RateLimitRecord>();
 
-// Limpeza periódica de registros antigos (a cada 1 hora)
-setInterval(() => {
+/**
+ * Limpeza sob demanda de registros expirados
+ * Executa apenas quando checkRateLimit é chamado
+ * Adequado para ambientes serverless como Vercel
+ */
+function cleanupExpiredRecords() {
   const now = Date.now();
   for (const [key, record] of requestCounts.entries()) {
     if (now > record.resetTime) {
       requestCounts.delete(key);
     }
   }
-}, 60 * 60 * 1000); // 1 hora
+}
 
 interface RateLimitConfig {
   windowMs: number;  // Janela de tempo em milissegundos
@@ -37,6 +41,9 @@ export function checkRateLimit(
   identifier: string,
   config: RateLimitConfig = { windowMs: 15 * 60 * 1000, maxRequests: 5 }
 ): { allowed: boolean; remaining: number; resetTime: number } {
+  // Limpa registros expirados antes de verificar
+  cleanupExpiredRecords();
+  
   const now = Date.now();
   const record = requestCounts.get(identifier);
 

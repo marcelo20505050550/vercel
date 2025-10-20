@@ -471,3 +471,63 @@ Os redirects de `.vercel.app` → `bvboaventura.com.br` só funcionam DEPOIS que
 - ✅ Depois habilite os redirects
 
 **Arquivo corrigido:** `next.config.js` (linhas 5-32 comentadas)
+
+---
+
+## 2025-10-20 - CORREÇÃO CRÍTICA: Erro de Deploy na Vercel - setInterval em Serverless
+
+### Problema Identificado:
+- ❌ **Build passou mas deploy falhou**: "An unexpected error happened when running this build"
+- ❌ **Log da Vercel**: Build completou em 42s, mas erro ao fazer "Deploying outputs..."
+- ❌ **Causa raiz**: `setInterval` no arquivo `src/utils/rateLimiter.ts` (linha 18-25)
+
+### Explicação:
+Ambientes serverless como **Vercel não suportam processos em background** como `setInterval` ou `setTimeout`:
+- Funções serverless são **stateless** e executam por requisição
+- Não há processo persistente para manter timers ativos
+- Código com `setInterval` causa falha silenciosa no deploy
+
+**Código problemático:**
+```typescript
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, record] of requestCounts.entries()) {
+    if (now > record.resetTime) {
+      requestCounts.delete(key);
+    }
+  }
+}, 60 * 60 * 1000); // ❌ Não funciona em serverless
+```
+
+### Solução Implementada:
+- ✅ **Removido `setInterval`** completamente
+- ✅ **Implementada limpeza sob demanda** (lazy cleanup)
+- ✅ **Função `cleanupExpiredRecords()`** criada
+- ✅ **Chamada automática** dentro de `checkRateLimit()`
+
+**Código corrigido:**
+```typescript
+function cleanupExpiredRecords() {
+  const now = Date.now();
+  for (const [key, record] of requestCounts.entries()) {
+    if (now > record.resetTime) {
+      requestCounts.delete(key);
+    }
+  }
+}
+
+export function checkRateLimit(...) {
+  cleanupExpiredRecords(); // ✅ Limpeza sob demanda
+  // ... resto do código
+}
+```
+
+### Regra Crítica - Serverless:
+**NUNCA use timers ou processos em background em código serverless:**
+- ❌ `setInterval()` - Não funciona
+- ❌ `setTimeout()` - Problemático
+- ❌ Processos contínuos - Impossível
+- ✅ Limpeza sob demanda - Correto
+- ✅ Cache externo (Redis) - Para produção com múltiplas instâncias
+
+**Arquivo corrigido:** `src/utils/rateLimiter.ts` (linhas 17-29 e 44-45)
