@@ -1,58 +1,27 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { checkRateLimit, getClientIdentifier, formatResetTime } from '@/utils/rateLimiter';
+// TEMPORÁRIO: Rate limiter desabilitado para debug do deploy
+// import { checkRateLimit, getClientIdentifier, formatResetTime } from '@/utils/rateLimiter';
 
 /**
  * Middleware de Segurança
  * 
  * Implementa:
- * - Rate Limiting (proteção contra abuso)
  * - CSRF Protection (validação de origem)
  * - Security Headers
  * - Logging seguro
+ * 
+ * NOTA: Rate Limiting temporariamente desabilitado para debug
  */
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const method = request.method;
 
   // ==========================================
-  // 1. RATE LIMITING - Proteção contra Abuso
+  // RATE LIMITING TEMPORARIAMENTE DESABILITADO
   // ==========================================
-  if (path.startsWith('/api/send-email') || path.startsWith('/api/send-curriculum')) {
-    const identifier = getClientIdentifier(request);
-    
-    // Configuração: 5 requisições a cada 15 minutos
-    const rateLimitResult = checkRateLimit(identifier, {
-      windowMs: 15 * 60 * 1000, // 15 minutos
-      maxRequests: 5
-    });
-
-    if (!rateLimitResult.allowed) {
-      const timeRemaining = formatResetTime(rateLimitResult.resetTime);
-      return NextResponse.json(
-        { 
-          error: 'Muitas requisições. Tente novamente mais tarde.',
-          details: `Aguarde ${timeRemaining} antes de enviar outra mensagem.`,
-          retryAfter: rateLimitResult.resetTime
-        },
-        { 
-          status: 429,
-          headers: {
-            'Retry-After': String(Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)),
-            'X-RateLimit-Limit': '5',
-            'X-RateLimit-Remaining': '0',
-            'X-RateLimit-Reset': String(rateLimitResult.resetTime)
-          }
-        }
-      );
-    }
-
-    // Adiciona headers de rate limit na resposta
-    const response = NextResponse.next();
-    response.headers.set('X-RateLimit-Limit', '5');
-    response.headers.set('X-RateLimit-Remaining', String(rateLimitResult.remaining));
-    response.headers.set('X-RateLimit-Reset', String(rateLimitResult.resetTime));
-  }
+  // Desabilitado para debug do deploy na Vercel
+  // TODO: Reimplementar com Vercel KV ou Upstash Redis
 
   // ==========================================
   // 2. CSRF PROTECTION - Validação de Origem
