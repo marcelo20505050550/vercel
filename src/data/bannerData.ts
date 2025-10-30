@@ -28,21 +28,21 @@ interface BannerItem {
 export const bannerData: BannerItem[] = [
   {
     id: 1,
-    title: "Produtos Únicos, Resultados Reais",
-    subtitle: "Máquinas sob medida para sua necessidade.",
-    description: "Desenvolvemos soluções técnicas para processos específicos. Alta performance com segurança e personalização.",
+    title: "Rebarbação Automatizada",
+    subtitle: "Precisão Real.",
+    description: "Acabamento sob medida para cada peça. Tecnologia e experiência unidas para eliminar imperfeições com eficiência.",
     buttonText: "Saíba mais",
     buttonLink: "/servicos",
-    imageSrc: "/banners/inicio/maquinas_especiais.png"
+    imageSrc: "/banners/inicio/rebarba.png"
   },
   {
     id: 2,
-    title: "Soluções Integradas para Indústria",
-    subtitle: "Tecnologia e precisão em cada detalhe",
-    description: "Oferecemos soluções completas que unem tecnologia avançada e expertise técnica para atender às necessidades específicas do seu negócio.",
+    title: "Rebarbação Manual",
+    subtitle: "Controle em cada detalhe.",
+    description: "Toque humano, acabamento perfeito. Com habilidade e experiência, garantimos precisão, cuidado e qualidade em cada peça produzida.",
     buttonText: "Conheça nossos serviços",
     buttonLink: "/servicos",
-    imageSrc: "/banners/inicio/maquinas_especiais.png"
+    imageSrc: "/banners/inicio/rebarba.png"
   },
 ];
 

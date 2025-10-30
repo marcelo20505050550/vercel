@@ -37,9 +37,21 @@
 - ✅ **vercel.json** agora está versionado (sem secrets - usar env vars na Vercel)
 - ✅ Sempre usar **limpeza sob demanda** ou **cache externo** (Redis, Vercel KV)
 
+### ✅ Correção Adicional (Tentativa 6):
+**Problemas encontrados no 5º deploy:**
+1. ❌ `swcMinify` inválido no Next.js 15 (já é padrão)
+2. ❌ `autoprefixer` e `postcss` em devDependencies (precisam estar em dependencies)
+3. ❌ `vercel.json` muito complexo causando conflitos
+
+**Soluções aplicadas:**
+- ✅ Removido `swcMinify` e `output: 'standalone'` do next.config.js
+- ✅ Movido `autoprefixer` e `postcss` para dependencies
+- ✅ Simplificado `vercel.json` drasticamente (apenas região e timeout de API)
+- ✅ Deixado Vercel usar comandos padrão de build e install
+
 ### Próximos Passos:
-1. Fazer commit e push das alterações
-2. Tentar novo deploy na Vercel
+1. ✅ Commit e push realizados (commit 4b5204a)
+2. ⏳ Aguardar novo deploy na Vercel (tentativa 6)
 3. Se deploy funcionar, reabilitar CSRF e logging gradualmente
 4. Considerar implementar rate limiting com Vercel KV ou Upstash Redis
 

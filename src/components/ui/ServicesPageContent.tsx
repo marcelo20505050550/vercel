@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import {
@@ -37,7 +37,15 @@ const MEDIA_CONFIG: Record<string, { type: 'image' | 'video'; src: string }[]> =
   ],
   rebarbacao: [
     { type: 'image', src: '/servicos/rebarba/rebarbacao-1.jpeg' },
+    { type: 'image', src: '/servicos/rebarba/1.png' },
+    { type: 'image', src: '/servicos/rebarba/2.png' },
+    { type: 'image', src: '/servicos/rebarba/3.png' },
+    { type: 'image', src: '/servicos/rebarba/4.png' },
+    { type: 'image', src: '/servicos/rebarba/5.png' },
+    { type: 'image', src: '/servicos/rebarba/6.png' },
+    { type: 'image', src: '/servicos/rebarba/7.png' },
     { type: 'video', src: '/servicos/rebarba/rebarbacao-2.mp4' },
+    { type: 'video', src: '/servicos/rebarba/8.mp4' },
   ],
   cilindros: [
     
@@ -52,12 +60,45 @@ interface MediaGalleryProps {
 const MediaGallery = ({ serviceId }: MediaGalleryProps) => {
   const [media, setMedia] = useState<{ type: 'image' | 'video'; src: string }[]>([]);
   const [selectedMedia, setSelectedMedia] = useState<{ type: 'image' | 'video'; src: string } | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   useEffect(() => {
     // Carregar mídia da configuração estática
     const serviceMedia = MEDIA_CONFIG[serviceId] || [];
     setMedia(serviceMedia);
   }, [serviceId]);
+
+  // Função para navegar para a próxima mídia
+  const handleNext = useCallback(() => {
+    const nextIndex = (selectedIndex + 1) % media.length;
+    setSelectedIndex(nextIndex);
+    setSelectedMedia(media[nextIndex]);
+  }, [selectedIndex, media]);
+
+  // Função para navegar para a mídia anterior
+  const handlePrev = useCallback(() => {
+    const prevIndex = selectedIndex === 0 ? media.length - 1 : selectedIndex - 1;
+    setSelectedIndex(prevIndex);
+    setSelectedMedia(media[prevIndex]);
+  }, [selectedIndex, media]);
+
+  // Suporte para navegação por teclado
+  useEffect(() => {
+    if (!selectedMedia) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        handleNext();
+      } else if (e.key === 'ArrowLeft') {
+        handlePrev();
+      } else if (e.key === 'Escape') {
+        setSelectedMedia(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedMedia, handleNext, handlePrev]);
 
   if (media.length === 0) {
     return null; // Não renderiza nada se não houver mídia
@@ -73,7 +114,10 @@ const MediaGallery = ({ serviceId }: MediaGalleryProps) => {
               key={index}
               className="relative w-full h-48 rounded-lg overflow-hidden cursor-pointer group"
               whileHover={{ scale: 1.05 }}
-              onClick={() => setSelectedMedia(item)}
+              onClick={() => {
+                setSelectedIndex(index);
+                setSelectedMedia(item);
+              }}
             >
               {item.type === 'image' ? (
                 <Image
@@ -106,11 +150,44 @@ const MediaGallery = ({ serviceId }: MediaGalleryProps) => {
           onClick={() => setSelectedMedia(null)}
         >
           <button
-            className="absolute top-4 right-4 text-white hover:text-yellow-400 transition-colors"
+            className="absolute top-4 right-4 text-white hover:text-yellow-400 transition-colors z-10"
             onClick={() => setSelectedMedia(null)}
           >
             <X className="h-8 w-8" />
           </button>
+
+          {/* Botões de navegação - apenas se houver mais de uma mídia */}
+          {media.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-white group z-10"
+                aria-label="Mídia anterior"
+              >
+                <ChevronLeft className="h-8 w-8 group-hover:scale-110 transition-transform" />
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-white group z-10"
+                aria-label="Próxima mídia"
+              >
+                <ChevronRight className="h-8 w-8 group-hover:scale-110 transition-transform" />
+              </button>
+
+              {/* Contador de mídia */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white text-sm font-medium z-10">
+                {selectedIndex + 1} / {media.length}
+              </div>
+            </>
+          )}
+
           <div className="max-w-6xl w-full" onClick={(e) => e.stopPropagation()}>
             {selectedMedia.type === 'image' ? (
               <div className="relative w-full h-[80vh] rounded-lg overflow-hidden">

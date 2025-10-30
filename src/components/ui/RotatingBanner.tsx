@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { bannerData } from '@/data/bannerData';
 
 // Hook para lidar com dimensões da tela de forma segura no SSR
 const useWindowSize = () => {
@@ -189,24 +190,7 @@ interface BannerSlide {
 }
 
 const ModernAnimatedBanner: React.FC = () => {
-  const slides: BannerSlide[] = [
-    {
-      id: 1,
-      title: "Produtos Únicos, Resultados Reais",
-      subtitle: "Máquinas sob medida para sua necessidade.",
-      description: "Desenvolvemos soluções técnicas para processos específicos. Alta performance com segurança e personalização.",
-      buttonText: "Produtos",
-      buttonLink: "/produtos"
-    },
-    {
-      id: 2,
-      title: "Soluções Integradas para Indústria",
-      subtitle: "Tecnologia e precisão em cada detalhe",
-      description: "Oferecemos soluções completas que unem tecnologia avançada e expertise técnica para atender às necessidades específicas do seu negócio.",
-      buttonText: "Serviços",
-      buttonLink: "/servicos"
-    }
-  ];
+  const slides = bannerData;
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
@@ -218,7 +202,7 @@ const ModernAnimatedBanner: React.FC = () => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
         setIsVisible(true);
       }, 500);
-    }, 8000);
+    }, 10000);
 
     return () => clearInterval(timer);
   }, [slides.length]);
