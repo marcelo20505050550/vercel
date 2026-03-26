@@ -21,9 +21,9 @@ const Header = () => {
             <Image
               src="/image/logo.png"
               alt="BV BoaVentura"
-              width={180}
-              height={60}
-              className="h-12 w-auto"
+              width={360}
+              height={120}
+              className="h-24 w-auto"
               priority
             />
           </Link>
@@ -38,9 +38,6 @@ const Header = () => {
             </Link>
             <Link href="/servicos" className="text-text hover:text-primary font-medium transition-colors">
               Serviços
-            </Link>
-            <Link href="/produtos" className="text-text hover:text-primary font-medium transition-colors">
-              Produtos
             </Link>
             <Link href="/parceiros" className="text-text hover:text-primary font-medium transition-colors">
               Parceiros
@@ -113,9 +110,6 @@ const Header = () => {
               </Link>
               <Link href="/servicos" className="text-text hover:text-primary font-medium transition-colors">
                 Serviços
-              </Link>
-              <Link href="/produtos" className="text-text hover:text-primary font-medium transition-colors">
-                Produtos
               </Link>
               <Link href="/parceiros" className="text-text hover:text-primary font-medium transition-colors">
                 Parceiros

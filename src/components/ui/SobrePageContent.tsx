@@ -93,18 +93,14 @@ export default function SobrePageContent() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="max-w-4xl mx-auto"
                     >
-                        <h2 className="text-3xl md:text-4xl font-bold text-text mb-8 text-center">
-                            Nossa História
-                        </h2>
-
                         {/* Imagem BV */}
                         <div className="text-center mb-8">
                             <Image
-                                src="/image/bv.png"
+                                src="/image/logo.png"
                                 alt="BV BoaVentura"
-                                width={800}
-                                height={400}
-                                className="w-full h-auto rounded-lg shadow-lg max-w-4xl mx-auto"
+                                width={600}
+                                height={200}
+                                className="w-full h-auto rounded-lg max-w-2xl mx-auto"
                             />
                         </div>
 
@@ -265,12 +261,6 @@ export default function SobrePageContent() {
                                 className="bg-white text-yellow-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
                             >
                                 Entre em Contato
-                            </a>
-                            <a
-                                href="/produtos"
-                                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-yellow-600 transition-colors duration-300"
-                            >
-                                Ver Produtos
                             </a>
                         </div>
                     </motion.div>

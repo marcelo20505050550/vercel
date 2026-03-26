@@ -1,21 +1,18 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
 import MainLayout from '@/components/layout/MainLayout';
 import ServicesSection from '@/components/ui/ServicesSection';
-import AboutSection from '@/components/ui/AboutSection';
-import ModernAnimatedBanner from '@/components/ui/RotatingBanner';
-import HomeFeaturedProducts from '@/components/ui/HomeFeaturedProducts';
-import TestimonialsSection from '@/components/ui/TestimonialsSection';
+import SequentialFrameAnimation from '@/components/ui/SequentialFrameAnimation';
+import RebarbacaoOverlays from '@/components/sections/RebarbacaoOverlays';
+import HeroOverlays from '@/components/sections/HeroOverlays';
 
 export const metadata: Metadata = {
-  title: 'BV BoaVentura - Caldeiraria e Implementos Agrícolas',
-  description: 'Empresa especializada em caldeiraria, implementos agrícolas e máquinas especiais. Soluções industriais completas com qualidade e excelência em São Joaquim da Barra, SP.',
-  keywords: ['caldeiraria industrial', 'implementos agrícolas', 'máquinas especiais', 'metalúrgica', 'soluções industriais', 'BV BoaVentura'],
+  title: 'BV BoaVentura - Rebarbação e Cilindros Hidráulicos',
+  description: 'Rebarbação e fabricação de cilindros hidráulicos. Soluções industriais completas com qualidade e excelência em São Joaquim da Barra, SP.',
+  keywords: ['Rebarbação', 'Cilindro Hidráulico', 'máquinas especiais'],
   openGraph: {
-    title: 'BV BoaVentura - Caldeiraria e Implementos Agrícolas',
-    description: 'Empresa especializada em caldeiraria, implementos agrícolas e máquinas especiais.',
-    url: 'https://bvboaventura.com.br',
+    title: 'BV BoaVentura - Rebarbação e Cilindros Hidráulicos',
+    description: 'Rebarbação e fabricação de cilindros hidráulicos. Soluções industriais completas com qualidade e excelência em São Joaquim da Barra, SP.',
+    url: 'https://bvboaventura.com.br/sobre',
     type: 'website',
   },
 };
@@ -23,22 +20,33 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <MainLayout>
-      {/* Banner Moderno Animado */}
-      <section className="relative overflow-hidden">
-        <ModernAnimatedBanner />
-      </section>
+      {/* Animações Sequenciais na Mesma Posição */}
+      <SequentialFrameAnimation
+        sequences={[
+          {
+            id: 'rebarbacao',
+            framesPath: '/frames/rebarbacao',
+            totalFrames: 60,
+            overlays: <RebarbacaoOverlays />,
+          },
+          {
+            id: 'hydraulic',
+            framesPath: '/frames/hydraulic',
+            totalFrames: 192,
+            overlays: <HeroOverlays />,
+          },
+        ]}
+        height="800vh"
+      />
 
-      {/* Produtos em Destaque */}
-      <HomeFeaturedProducts />
+      {/* Transição suave */}
+      <div className="relative -mt-20 bg-gradient-to-b from-transparent via-white/50 to-white h-20 z-10" />
 
-      {/* Sobre Section - Moderno */}
-      <AboutSection />
-
-      {/* Seção de Depoimentos */}
-      <TestimonialsSection />
-
-      {/* Serviços Section */}
-      <ServicesSection />
+      {/* Conteúdo Principal */}
+      <div className="relative z-20 bg-white">
+        {/* Serviços Section */}
+        <ServicesSection />
+      </div>
     </MainLayout>
   );
 } 

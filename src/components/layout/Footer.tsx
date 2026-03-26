@@ -16,12 +16,12 @@ const Footer = () => {
               <Image
                 src="/image/logo-white.png"
                 alt="BV BoaVentura"
-                width={180}
-                height={60}
-                className="h-12 w-auto mb-4"
+                width={360}
+                height={120}
+                className="h-24 w-auto mb-4"
               />
               <p className="text-gray-300 mt-4">
-                Soluções completas em caldeiraria e máquinas especiais.
+                Especialistas em rebarbação industrial e cilindros hidráulicos sob medida.
               </p>
             </div>
           </div>
@@ -43,11 +43,6 @@ const Footer = () => {
               <li>
                 <Link href="/servicos" className="text-gray-300 hover:text-primary transition-colors">
                   Serviços
-                </Link>
-              </li>
-              <li>
-                <Link href="/produtos" className="text-gray-300 hover:text-primary transition-colors">
-                  Produtos
                 </Link>
               </li>
               <li>

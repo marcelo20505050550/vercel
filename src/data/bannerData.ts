@@ -52,19 +52,6 @@ export const sobreBanners: BannerItem[] = [];
 // Banner da página Serviços (removido - agora usando design moderno sem banner)
 export const servicosBanners: BannerItem[] = [];
 
-// Banner da página Produtos
-export const produtosBanners: BannerItem[] = [
-  {
-    id: 1,
-    title: "Produtos de Excelência",
-    subtitle: "Portfólio de soluções em caldeiraria industrial",
-    description: "Conheça os produtos que desenvolvemos com expertise técnica, qualidade e inovação para diversos setores industriais.",
-    buttonText: "",
-    buttonLink: "",
-    imageSrc: "/produtos/01.png"
-  },
-];
-
 // Banner da página Contato
 export const contatoBanners: BannerItem[] = [
   {
