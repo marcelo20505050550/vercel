@@ -12,7 +12,8 @@ dist/
 .env.test.local
 .env.production.local
 .env.example
-
+.kiro
+.vccode
 # vercel.json agora está versionado (sem secrets)
 # Usar variáveis de ambiente na Vercel para secrets
 
