@@ -121,13 +121,19 @@ export default function SequentialFrameAnimation({
     const canvasRatio = canvas.width / canvas.height;
     let drawW = 0, drawH = 0, offsetX = 0, offsetY = 0;
 
+    // Detecta mobile e aplica zoom out
+    const isMobile = window.innerWidth < 768;
+    const mobileScale = isMobile ? 0.85 : 1;
+
     if (imgRatio > canvasRatio) {
-      drawH = canvas.height;
-      drawW = canvas.height * imgRatio;
+      drawH = canvas.height * mobileScale;
+      drawW = (canvas.height * imgRatio) * mobileScale;
       offsetX = (canvas.width - drawW) / 2;
+      offsetY = (canvas.height - drawH) / 2;
     } else {
-      drawW = canvas.width;
-      drawH = canvas.width / imgRatio;
+      drawW = canvas.width * mobileScale;
+      drawH = (canvas.width / imgRatio) * mobileScale;
+      offsetX = (canvas.width - drawW) / 2;
       offsetY = (canvas.height - drawH) / 2;
     }
 
