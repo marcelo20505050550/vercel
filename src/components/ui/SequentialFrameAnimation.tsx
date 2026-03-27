@@ -123,7 +123,7 @@ export default function SequentialFrameAnimation({
 
     // Detecta mobile e aplica zoom out
     const isMobile = window.innerWidth < 768;
-    const mobileScale = isMobile ? 0.85 : 1;
+    const mobileScale = isMobile ? 0.6 : 1;
 
     if (imgRatio > canvasRatio) {
       drawH = canvas.height * mobileScale;
