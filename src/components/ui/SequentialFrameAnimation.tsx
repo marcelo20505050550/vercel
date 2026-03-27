@@ -166,7 +166,7 @@ export default function SequentialFrameAnimation({
           style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%)' }}
         />
         
-        {/* Renderiza apenas os overlays da sequência ativa */}
+        {/* Renderiza aapenas os overlays da sequência ativa */}
         {active.sequence.overlays}
       </div>
     </section>
