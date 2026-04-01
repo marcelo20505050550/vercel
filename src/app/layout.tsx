@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import JsonLd from '@/components/JsonLd';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -97,6 +98,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className} min-h-screen bg-gray-light`}>
+        <GoogleAnalytics />
         <JsonLd />
         {children}
         <ScrollToTopButton />
