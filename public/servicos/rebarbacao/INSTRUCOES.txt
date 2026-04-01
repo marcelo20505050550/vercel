@@ -1,0 +1,38 @@
+﻿# INSTRUÇÕES PARA ADICIONAR FOTOS E VÍDEOS
+
+## 📁 Estrutura de Pastas Criada:
+
+public/servicos/rebarbacao/
+├── antes-depois/
+│   ├── antes-1.jpg (ou .png, .webp)
+│   ├── depois-1.jpg
+│   ├── antes-2.jpg (opcional)
+│   └── depois-2.jpg (opcional)
+└── videos/
+    └── processo-rebarbacao.mp4 (quando estiver pronto)
+
+## 📸 Como Adicionar as Fotos:
+
+1. Copie suas fotos de antes/depois para:
+   C:\Backup\Aplicativos\bvboaventura\public\servicos\rebarbacao\antes-depois\
+
+2. Nomeie os arquivos como:
+   - antes-1.jpg (foto antes do processo)
+   - depois-1.jpg (foto depois do processo)
+   - antes-2.jpg (segunda foto antes - opcional)
+   - depois-2.jpg (segunda foto depois - opcional)
+
+3. Formatos aceitos: .jpg, .jpeg, .png, .webp
+
+## 🎥 Como Adicionar o Vídeo (quando estiver pronto):
+
+1. Copie o vídeo para:
+   C:\Backup\Aplicativos\bvboaventura\public\servicos\rebarbacao\videos\
+
+2. Nomeie como: processo-rebarbacao.mp4
+
+3. Formatos aceitos: .mp4, .webm
+
+## ✅ Depois de Adicionar:
+
+Me avise aqui no chat que você adicionou as fotos e eu atualizo o código automaticamente para exibi-las na landing page!
