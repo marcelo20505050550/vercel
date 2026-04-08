@@ -15,7 +15,8 @@ dist/
 .kiro
 .claude
 .vccode
-s
+.docs
+
 # vercel.json agora está versionado (sem secrets)
 # Usar variáveis de ambiente na Vercel para secrets
 
