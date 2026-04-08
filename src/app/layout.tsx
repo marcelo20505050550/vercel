@@ -97,6 +97,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18068307660"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-18068307660');
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.className} min-h-screen bg-gray-light`}>
         <GoogleAnalytics />
         <JsonLd />

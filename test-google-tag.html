@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Google Tag - BV BoaVentura</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18068307660"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-18068307660');
+    </script>
+</head>
+<body>
+    <h1>Teste de Tag do Google Ads</h1>
+    <p>Esta página contém a tag do Google Ads para teste.</p>
+    <p>ID: AW-18068307660</p>
+    
+    <script>
+        // Verificar se gtag foi carregado
+        setTimeout(() => {
+            if (typeof gtag !== 'undefined') {
+                console.log('✅ Google Tag carregado com sucesso!');
+                document.body.innerHTML += '<p style="color: green;">✅ Google Tag carregado com sucesso!</p>';
+            } else {
+                console.log('❌ Google Tag NÃO foi carregado');
+                document.body.innerHTML += '<p style="color: red;">❌ Google Tag NÃO foi carregado</p>';
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
